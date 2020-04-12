@@ -30,6 +30,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy:ghpages": "react-scripts build && gh-pages -d build",
     "test:jest": "react-scripts test",
     "test:jest:coverage": "react-scripts test --coverage",
     "analyze:app": "source-map-explorer build/static/js/main.*",
