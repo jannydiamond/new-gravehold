@@ -1,6 +1,5 @@
 ## ToC
 
-- [ToC](#toc)
 - [About](#about)
 - [Available Scripts](#available-scripts)
   - [`yarn start`](#yarn-start)
