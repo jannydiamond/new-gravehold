@@ -9,6 +9,7 @@
 
 ## About
 An editor to create the json file for custom expeditions that you can import into the Aeons End Randomizer.
+[Documentation of the API](https://on3iro.github.io/aeons-end-randomizer/#/)
 
 ## Available Scripts
 
