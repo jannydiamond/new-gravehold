@@ -1,9 +1,12 @@
 import React from 'react'
 
+import Configurator from '../molecules/Configurator'
+
 const MainApp = () => {
   return (
     <>
-      <p>Hello App</p>
+      <h1>AER: Custom Expedition Editor</h1>
+      <Configurator />
     </>
   )
 }
