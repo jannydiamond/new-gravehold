@@ -1,6 +1,5 @@
 import { createAction, ActionsUnion } from '@martin_hotell/rex-tils'
 import { LoopReducer } from 'redux-loop'
-import * as DraftExpedition from 'Redux/Store/DraftExpedition'
 
 ///////////
 // STATE //
