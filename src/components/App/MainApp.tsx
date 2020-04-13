@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Configurator from '../molecules/Configurator'
+import Configurator from 'components/molecules/Configurator'
 
 const MainApp = () => {
   return (
