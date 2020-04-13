@@ -2,6 +2,7 @@ import { combineReducers } from 'redux-loop'
 
 import * as Name from './Name'
 import * as BigPocketVariantConfig from './BigPocketVariantConfig'
+import * as SequenceConfig from './SequenceConfig'
 
 ///////////
 // STATE //
@@ -10,11 +11,13 @@ import * as BigPocketVariantConfig from './BigPocketVariantConfig'
 export type State = {
   Name: Name.State
   BigPocketVariantConfig: BigPocketVariantConfig.State
+  SequenceConfig: SequenceConfig.State
 }
 
 export const initialState = {
   Name: Name.initialState,
   BigPocketVariantConfig: BigPocketVariantConfig.initialState,
+  SequenceConfig: SequenceConfig.initialState,
 }
 
 /////////////
@@ -24,10 +27,13 @@ export const initialState = {
 export const actions = {
   Name: Name.actions,
   BigPocketVariantConfig: BigPocketVariantConfig.actions,
+  SequenceConfig: SequenceConfig.actions,
 }
 
-export type Action = Name.Action
+export type Action =
+  | Name.Action
   | BigPocketVariantConfig.Action
+  | SequenceConfig.Action
 
 /////////////
 // REDUCER //
@@ -36,6 +42,7 @@ export type Action = Name.Action
 export const Reducer = combineReducers({
   Name: Name.Reducer,
   BigPocketVariantConfig: BigPocketVariantConfig.Reducer,
+  SequenceConfig: SequenceConfig.Reducer,
 })
 
 ///////////////
@@ -45,4 +52,5 @@ export const Reducer = combineReducers({
 export const selectors = {
   Name: Name.selectors,
   BigPocketVariantConfig: BigPocketVariantConfig.selectors,
+  SequenceConfig: SequenceConfig.selectors,
 }

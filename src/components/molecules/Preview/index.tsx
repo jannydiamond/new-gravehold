@@ -9,7 +9,12 @@ import Wrapper from './__styled__/Wrapper'
 
 const mapStateToProps = (state: RootState) => ({
   name: selectors.DraftExpedition.Name.getExpeditionName(state),
-  bigPocketVariantConfig: selectors.DraftExpedition.BigPocketVariantConfig.getBigPocketVariantConfig(state)
+  bigPocketVariantConfig: selectors.DraftExpedition.BigPocketVariantConfig.getBigPocketVariantConfig(
+    state
+  ),
+  branches: selectors.DraftExpedition.SequenceConfig.Branches.getBranches(
+    state
+  ),
 })
 
 type Props = ReturnType<typeof mapStateToProps> & {
@@ -20,10 +25,25 @@ const Preview = ({
   fileName = 'expedition',
   name,
   bigPocketVariantConfig,
+  branches,
 }: Props) => {
+
+  const dataBranches = branches.reduce((branches, branch) => {
+    return {
+      ...branches,
+      [branch.id]: {
+        type: branch.type,
+        nextBranchId: branch.nextBranchId
+      }
+    }
+  }, {})
+
   const data = {
     name: name,
     bigPocketVariantConfig: bigPocketVariantConfig,
+    sequenceConfig: {
+      branches: dataBranches
+    }
   }
 
   const handleCopyToClipboard = () => {
