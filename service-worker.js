@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/aer-custom-expedition-editor/precache-manifest.89ef5214bd62e7b81058c391e43047a6.js"
+  "/aer-custom-expedition-editor/precache-manifest.9dd1b20d89392c5288301eed951c5b24.js"
 );
 
 self.addEventListener('message', (event) => {
