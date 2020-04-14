@@ -5,8 +5,8 @@ import { LoopReducer } from 'redux-loop'
 // STATE //
 ///////////
 
-export type State = string | undefined
-export const initialState: State = undefined
+export type State = string
+export const initialState: State = ""
 
 /////////////
 // ACTIONS //
