@@ -19,6 +19,8 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.7",
     "@types/styled-components": "^5.0.1",
+    "aer-data": "^1.0.10",
+    "aer-types": "^1.0.4",
     "cross-env": "^7.0.2",
     "file-saver": "^2.0.2",
     "gh-pages": "^2.2.0",
