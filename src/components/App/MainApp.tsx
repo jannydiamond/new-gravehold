@@ -9,6 +9,7 @@ const MainApp = () => {
     <Wrapper>
       <H1>AER: Custom Expedition Editor</H1>
       <Configurator />
+      <div id="modal-root" />
     </Wrapper>
   )
 }
