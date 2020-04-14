@@ -5,7 +5,9 @@ import { RootState, selectors } from 'Redux/Store'
 
 import { saveToFile, copyToClipboard } from 'helpers'
 
+import Button from 'components/atoms/Button'
 import Wrapper from './__styled__/Wrapper'
+import Pre from './__styled__/Pre'
 
 const mapStateToProps = (state: RootState) => ({
   name: selectors.DraftExpedition.Name.getExpeditionName(state),
@@ -56,16 +58,14 @@ const Preview = ({
 
   return (
     <Wrapper>
-      <code>
-        <pre>{JSON.stringify(data, null, '  ')}</pre>
-      </code>
+      <Pre>{JSON.stringify(data, null, '  ')}</Pre>
 
-      <button type="button" onClick={handleCopyToClipboard}>
+      <Button type="button" onClick={handleCopyToClipboard}>
         Copy to clipboard
-      </button>
-      <button type="button" onClick={handleSave}>
+      </Button>
+      <Button type="button" onClick={handleSave}>
         Save to file
-      </button>
+      </Button>
     </Wrapper>
   )
 }

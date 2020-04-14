@@ -3,23 +3,20 @@ import { connect } from 'react-redux'
 
 import { RootState, selectors, actions } from 'Redux/Store'
 
+import BasicInformation from 'components/templates/BasicInformation'
 import Preview from 'components/molecules/Preview'
 import Label from 'components/atoms/Label'
+import Button from 'components/atoms/Button'
 
 import Wrapper from './__styled__/Wrapper'
 import Form from './__styled__/Form'
 
 const mapStateToProps = (state: RootState) => ({
-  name: selectors.DraftExpedition.Name.getExpeditionName(state),
-  bigPocketVariantConfig: selectors.DraftExpedition.BigPocketVariantConfig.getBigPocketVariantConfig(state),
   branches: selectors.DraftExpedition.SequenceConfig.Branches.getBranches(state),
   branchIds: selectors.DraftExpedition.SequenceConfig.Branches.getBranchIds(state),
 })
 
 const mapDispatchToProps = {
-  setExpeditionName: actions.DraftExpedition.Name.setExpeditionName,
-  setBigPocketVariantConfig:
-    actions.DraftExpedition.BigPocketVariantConfig.setBigPocketVariantConfig,
   addBranch: actions.DraftExpedition.SequenceConfig.Branches.addBranch,
 }
 
@@ -37,25 +34,13 @@ const initialState: FormBranch = {
 }
 
 const Configurator = ({
-  name,
-  bigPocketVariantConfig,
   branches,
   branchIds,
-  setExpeditionName,
-  setBigPocketVariantConfig,
   addBranch,
 }: Props) => {
 
   const [branch, setBranch] = useState<FormBranch>(initialState)
   const [nextBranchId, setNextBranchId] = useState<string | null>(null)
-
-  const handleInputChange = (event: any) => {
-    setExpeditionName(event.target.value)
-  }
-
-  const handleCheckboxChange = (event: any) => {
-    setBigPocketVariantConfig(event.currentTarget.checked)
-  }
 
   const handleBranchIdentifierChange = (event: any) => {
     setBranch({
@@ -99,27 +84,7 @@ const Configurator = ({
   return (
     <Wrapper>
       <Form>
-        <fieldset>
-          <legend>Basic Information</legend>
-          <Label htmlFor="name">Expedition Name</Label>
-          <input
-            id="name"
-            name="name"
-            onChange={handleInputChange}
-            defaultValue={name}
-          />
-
-          <Label htmlFor="bigPocketVariantConfig">
-            <input
-              id="bigPocketVariantConfig"
-              type="checkbox"
-              name="bigPocketVariantConfig"
-              onChange={handleCheckboxChange}
-              defaultChecked={bigPocketVariantConfig}
-            />
-            Big Pocket Mode
-          </Label>
-        </fieldset>
+        <BasicInformation />
 
         <fieldset>
           <legend>Branches</legend>
@@ -143,13 +108,13 @@ const Configurator = ({
             <option value="reward">reward</option>
           </select>
 
-          <button
+          <Button
             type="button"
             style={{ display: 'block', margin: '24px 0 0' }}
             onClick={handleAddBranch}
           >
             Add branch
-          </button>
+          </Button>
 
           {branches.length > 0 ? (
             <ul>
