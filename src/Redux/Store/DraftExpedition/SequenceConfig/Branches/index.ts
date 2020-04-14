@@ -10,7 +10,7 @@ import { LoopReducer } from 'redux-loop'
 type Branch = {
   id: string,
   type: 'narrative' | 'battle' | 'reward',
-  nextBranchId?: string[]
+  nextBranchId?: string[] | string
 }
 
 type Branches = {
