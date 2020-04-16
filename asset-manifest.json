@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/aer-custom-expedition-editor/static/js/main.a00a9ee6.chunk.js",
-    "main.js.map": "/aer-custom-expedition-editor/static/js/main.a00a9ee6.chunk.js.map",
+    "main.js": "/aer-custom-expedition-editor/static/js/main.09d2adee.chunk.js",
+    "main.js.map": "/aer-custom-expedition-editor/static/js/main.09d2adee.chunk.js.map",
     "runtime-main.js": "/aer-custom-expedition-editor/static/js/runtime-main.79d09fcd.js",
     "runtime-main.js.map": "/aer-custom-expedition-editor/static/js/runtime-main.79d09fcd.js.map",
-    "static/js/2.f3597ddc.chunk.js": "/aer-custom-expedition-editor/static/js/2.f3597ddc.chunk.js",
-    "static/js/2.f3597ddc.chunk.js.map": "/aer-custom-expedition-editor/static/js/2.f3597ddc.chunk.js.map",
+    "static/js/2.817adaa4.chunk.js": "/aer-custom-expedition-editor/static/js/2.817adaa4.chunk.js",
+    "static/js/2.817adaa4.chunk.js.map": "/aer-custom-expedition-editor/static/js/2.817adaa4.chunk.js.map",
     "index.html": "/aer-custom-expedition-editor/index.html",
-    "precache-manifest.9cf1da33b4833fde12966e2b15c6f7be.js": "/aer-custom-expedition-editor/precache-manifest.9cf1da33b4833fde12966e2b15c6f7be.js",
+    "precache-manifest.d214fe74f5fea0930633834140b47213.js": "/aer-custom-expedition-editor/precache-manifest.d214fe74f5fea0930633834140b47213.js",
     "service-worker.js": "/aer-custom-expedition-editor/service-worker.js",
-    "static/js/2.f3597ddc.chunk.js.LICENSE.txt": "/aer-custom-expedition-editor/static/js/2.f3597ddc.chunk.js.LICENSE.txt"
+    "static/js/2.817adaa4.chunk.js.LICENSE.txt": "/aer-custom-expedition-editor/static/js/2.817adaa4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.79d09fcd.js",
-    "static/js/2.f3597ddc.chunk.js",
-    "static/js/main.a00a9ee6.chunk.js"
+    "static/js/2.817adaa4.chunk.js",
+    "static/js/main.09d2adee.chunk.js"
   ]
 }
