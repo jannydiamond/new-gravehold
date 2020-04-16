@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e0b99ef2d341acde934c53dccfed59d9",
+    "revision": "05929468a6cbcfb2696a17574b998559",
     "url": "/aer-custom-expedition-editor/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/aer-custom-expedition-editor/static/js/2.817adaa4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "637f672d4b286a84ffd3",
-    "url": "/aer-custom-expedition-editor/static/js/main.09d2adee.chunk.js"
+    "revision": "10ee2f5b215cb6ad2c87",
+    "url": "/aer-custom-expedition-editor/static/js/main.3eb216ac.chunk.js"
   },
   {
     "revision": "37d2a7bbe05d6f7ed386",
