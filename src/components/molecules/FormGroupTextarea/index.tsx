@@ -2,7 +2,7 @@ import React from 'react'
 
 import ScreenReaderOnlyText from 'components/atoms/ScreenReaderOnlyText'
 import Label from 'components/atoms/Label'
-import Input from 'components/atoms/Input'
+import Textarea from 'components/atoms/Textarea'
 import Wrapper from './__styled__/Wrapper'
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
   required?: boolean
 }
 
-const FormGroupInputText = ({
+const FormGroupTextarea = ({
   id,
   label,
   labelHidden,
@@ -36,10 +36,9 @@ const FormGroupInputText = ({
           )
         }
       </Label>
-      <Input
+      <Textarea
         id={id}
         name={name ? name : id}
-        type="text"
         onChange={onChange}
         defaultValue={defaultValue}
         required={required}
@@ -48,4 +47,4 @@ const FormGroupInputText = ({
   )
 }
 
-export default React.memo(FormGroupInputText)
+export default React.memo(FormGroupTextarea)

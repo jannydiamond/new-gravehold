@@ -1,24 +1,14 @@
 import { createSelector } from 'reselect'
-
-import { createAction, ActionsUnion } from '@martin_hotell/rex-tils'
 import { LoopReducer } from 'redux-loop'
+import { createAction, ActionsUnion } from '@martin_hotell/rex-tils'
+
+import * as types from 'types'
 
 ///////////
 // STATE //
 ///////////
 
-type Branch = {
-  id: string,
-  type: 'narrative' | 'battle' | 'reward',
-  nextBranchId?: string[] | string
-}
-
-type Branches = {
-  [id: string]: Branch
-}
-
-
-export type State = Branches
+export type State = types.Branches | {}
 export const initialState: State = {}
 
 /////////////
@@ -31,7 +21,7 @@ export enum ActionTypes {
 
 export const actions = {
   noOp: () => createAction('NOOP'),
-  addBranch: (branch: Branch) =>
+  addBranch: (branch: types.Branch) =>
     createAction(ActionTypes.ADD_BRANCH, branch),
 }
 
@@ -47,16 +37,35 @@ export const Reducer: LoopReducer<State, Action> = (
 ) => {
   switch (action.type) {
     case ActionTypes.ADD_BRANCH: {
-      const { id, type, nextBranchId } = action.payload
+      const { _id, id, type } = action.payload
 
-      return {
-        ...state,
-        [id]: {
-          id,
-          type,
-          nextBranchId
+      switch(type) {
+        case "narrative": {
+          const { text, decisions } = action.payload
+
+          return {
+            ...state,
+            [id]: {
+              _id,
+              id,
+              type,
+              text,
+              decisions: decisions ? [...decisions] : false
+            },
+          }
         }
-      }
+
+        default: {
+          return {
+            ...state,
+            [id]: {
+              _id,
+              id,
+              type,
+            },
+          }
+        }
+      }  
     }
 
     default: {
