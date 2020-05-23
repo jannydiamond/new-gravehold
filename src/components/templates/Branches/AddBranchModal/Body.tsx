@@ -1,42 +1,35 @@
 import React from 'react'
 
+import * as types from 'types'
+
 import Fieldset from 'components/molecules/Fieldset'
 import FormGroupInputText from 'components/molecules/FormGroupInputText'
-import Label from 'components/atoms/Label'
-import Select from 'components/atoms/Select'
+import FormGroupTextarea from 'components/molecules/FormGroupTextarea'
+import FormGroupSelect from 'components/molecules/FormGroupSelect'
 import ModalBodyWrapper from 'components/atoms/ModalBodyWrapper'
 
-type BranchType = 'narrative' | 'battle' | 'reward'
-
-type Branch = {
-  id: string,
-  type: BranchType,
-  nextBranchId?: string[] | string
-}
-
-type BranchTypeOption = {
-  value: BranchType
-  label: string
-}
-
-type BranchTypeOptions = BranchTypeOption[]
-
-const branchTypeOptions: BranchTypeOptions = [
+const branchTypeOptions: types.BranchTypeOptions = [
   { value: 'narrative', label: 'narrative' },
   { value: 'battle', label: 'battle' },
   { value: 'reward', label: 'reward' },
 ]
 
 type Props = {
-  branch: Branch
+  branch: types.Branch
   changeId: (event: any) => void
-  changeType: (selectOption: BranchTypeOption) => void
+  changeType: (selectOption: types.BranchTypeOption) => void
+  changeText: (event: any) => void
+  changeDecisions: (event: any) => void
+  error: string | null
 }
 
 const Body = ({
   branch,
   changeId,
-  changeType
+  changeType,
+  changeText,
+  changeDecisions,
+  error,
 }: Props) => {
 
   const defaultValue = branchTypeOptions.find(
@@ -45,24 +38,40 @@ const Body = ({
 
   return (
     <ModalBodyWrapper>
+      {error && (<p>{error}</p>)}
       <Fieldset legend="Branches">
         <FormGroupInputText
           id="branchId"
           label="Branch id"
           onChange={changeId}
           defaultValue={branch.id}
+          required={true}
         />
-
-        <Label htmlFor="branchType">Branch type</Label>
-        <Select
+        <FormGroupSelect 
           options={branchTypeOptions}
-          classNamePrefix="ReactSelect"
           id="branchType"
-          name="branchType"
+          label="Branch type"
           onChange={changeType}
           defaultValue={defaultValue}
         />
 
+        {branch.type === 'narrative' && (
+          <>
+            <FormGroupTextarea 
+              id="description"
+              label="Text"
+              onChange={changeText}
+              defaultValue={branch.text}
+            />
+            <p>Add multiple decisions by separating them with ';' followed by a SPACE</p>
+            <FormGroupInputText
+              id="decisions"
+              label="Decisions"
+              onChange={changeDecisions}
+              defaultValue={branch.decisions ? branch.decisions.map(decision => decision.text) : ''}
+            />
+          </>
+        )}
       </Fieldset>
     </ModalBodyWrapper>
   )

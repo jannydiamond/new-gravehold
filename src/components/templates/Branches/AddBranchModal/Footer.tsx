@@ -1,7 +1,10 @@
 import React from 'react'
+import shortid from 'shortid'
 import { connect } from 'react-redux'
 
 import { actions } from 'Redux/Store'
+
+import * as types from 'types'
 
 import Button from 'components/atoms/Button'
 
@@ -9,18 +12,11 @@ const mapDispatchToProps = {
   addBranch: actions.DraftExpedition.SequenceConfig.Branches.addBranch,
 }
 
-type BranchType = 'narrative' | 'battle' | 'reward'
-
-type Branch = {
-  id: string,
-  type: BranchType,
-  nextBranchId?: string[] | string
-}
-
 type Props = typeof mapDispatchToProps & {
   modal: any,
-  branch: Branch
+  branch: types.Branch
   clearState: () => void
+  handleError: (error: string) => void
 }
 
 const Footer = ({
@@ -28,10 +24,20 @@ const Footer = ({
   branch,
   clearState,
   addBranch,
+  handleError,
 }: Props) => {
 
   const handleAddBranch = () => {
-    addBranch(branch)
+    console.log(branch.id)
+    if (branch.id === "") {
+      handleError('The branch id is manatory!')
+      return
+    }
+
+    addBranch({
+      ...branch,
+      _id: shortid.generate()
+    })
     clearState()
     modal.hide()
   }

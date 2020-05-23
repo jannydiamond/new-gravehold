@@ -1,12 +1,15 @@
 import React from 'react'
 
+import * as types from 'types'
+
 import ScreenReaderOnlyText from 'components/atoms/ScreenReaderOnlyText'
 import Label from 'components/atoms/Label'
-import Input from 'components/atoms/Input'
+import Select from 'components/atoms/Select'
 import Wrapper from './__styled__/Wrapper'
 
 type Props = {
   id: string
+  options: types.SelectOptions
   label: string
   labelHidden?: boolean
   name?: string
@@ -17,6 +20,7 @@ type Props = {
 
 const FormGroupInputText = ({
   id,
+  options,
   label,
   labelHidden,
   name,
@@ -36,10 +40,11 @@ const FormGroupInputText = ({
           )
         }
       </Label>
-      <Input
+      <Select
+        options={options}
+        classNamePrefix="ReactSelect"
         id={id}
         name={name ? name : id}
-        type="text"
         onChange={onChange}
         defaultValue={defaultValue}
         required={required}

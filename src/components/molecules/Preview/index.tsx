@@ -31,13 +31,33 @@ const Preview = ({
 }: Props) => {
 
   const dataBranches = branches.reduce((branches, branch) => {
-    return {
-      ...branches,
-      [branch.id]: {
-        type: branch.type,
-        nextBranchId: branch.nextBranchId
+    switch(branch.type) {
+      case "narrative": {
+
+        const newBranch = {
+          type: branch.type,
+          config: {
+            text: branch.text,
+            decisions: branch.decisions ? branch.decisions.map(decision => decision.text) : false
+          }
+        }
+
+        return {
+          ...branches,
+          [branch.id]: newBranch,
+        }
+      }
+
+      default: {
+        return {
+          ...branches,
+          [branch.id]: {
+            type: branch.type,
+          }
+        }
       }
     }
+    
   }, {})
 
   const data = {
