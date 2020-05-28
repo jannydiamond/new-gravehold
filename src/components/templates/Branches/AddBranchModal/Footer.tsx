@@ -1,34 +1,57 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { actions } from 'Redux/Store'
+import { RootState, selectors, actions } from 'Redux/Store'
 
 import * as types from 'types'
 
 import Button from 'components/atoms/Button'
 
+const mapStateToProps = (state: RootState) => ({
+  draftBranch: selectors.DraftExpedition.SequenceConfig.DraftBranch.getDraftBranchState(
+    state
+  ),
+  draftRewardSupplyCards: selectors.DraftExpedition.SequenceConfig.DraftRewardSupplyCard.getDraftRewardSupplyCardArray(
+    state
+  ),
+})
+
 const mapDispatchToProps = {
   addBranch: actions.DraftExpedition.SequenceConfig.Branches.addBranch,
-  clearDraftBranch: actions.DraftExpedition.SequenceConfig.DraftBranch.clearDraftBranch,
+  clearDraftBranch:
+    actions.DraftExpedition.SequenceConfig.DraftBranch.clearDraftBranch,
+  clearDraftRewardSupplyCards:
+    actions.DraftExpedition.SequenceConfig.DraftRewardSupplyCard
+      .clearDraftRewardSupplyCard,
 }
 
-type Props = typeof mapDispatchToProps & {
-  modal: any,
-  branch: types.Branch
-}
+type Props = ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps & {
+    modal: any
+  }
 
 const Footer = ({
   modal,
-  branch,
+  draftBranch,
+  draftRewardSupplyCards,
   addBranch,
-  clearDraftBranch
+  clearDraftBranch,
+  clearDraftRewardSupplyCards,
 }: Props) => {
-
   const handleAddBranch = () => {
+    const newBranch = {
+      ...draftBranch,
+      supply: {
+        ...(draftBranch as types.RewardBranch).supply,
+        blueprints: [...draftRewardSupplyCards],
+      },
+    }
+
     addBranch({
-      ...branch,
+      ...(newBranch as types.Branch),
     })
     clearDraftBranch()
+    clearDraftRewardSupplyCards()
     modal.hide()
   }
 
@@ -45,7 +68,4 @@ const Footer = ({
   )
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(React.memo(Footer))
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Footer))

@@ -15,7 +15,7 @@ type Props = {
   required?: boolean
 }
 
-const FormGroupInputText = ({
+const FormGroupInputNumber = ({
   id,
   label,
   labelHidden,
@@ -36,7 +36,7 @@ const FormGroupInputText = ({
       <Input
         id={id}
         name={name ? name : id}
-        type="text"
+        type="number"
         onChange={onChange}
         defaultValue={defaultValue}
         required={required}
@@ -45,4 +45,4 @@ const FormGroupInputText = ({
   )
 }
 
-export default React.memo(FormGroupInputText)
+export default React.memo(FormGroupInputNumber)

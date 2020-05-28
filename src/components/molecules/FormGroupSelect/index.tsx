@@ -14,8 +14,9 @@ type Props = {
   labelHidden?: boolean
   name?: string
   onChange: (event: any) => void
-  defaultValue: any
+  defaultValue?: any
   required?: boolean
+  isMulti?: boolean
 }
 
 const FormGroupInputText = ({
@@ -26,19 +27,17 @@ const FormGroupInputText = ({
   name,
   onChange,
   defaultValue,
-  required
+  required,
+  isMulti,
 }: Props) => {
-  
   return (
     <Wrapper>
       <Label htmlFor={id}>
-        {
-          labelHidden ? (
-            <ScreenReaderOnlyText>{label}</ScreenReaderOnlyText>
-          ) : (
-            label
-          )
-        }
+        {labelHidden ? (
+          <ScreenReaderOnlyText>{label}</ScreenReaderOnlyText>
+        ) : (
+          label
+        )}
       </Label>
       <Select
         options={options}
@@ -48,6 +47,7 @@ const FormGroupInputText = ({
         onChange={onChange}
         defaultValue={defaultValue}
         required={required}
+        isMulti={isMulti}
       />
     </Wrapper>
   )

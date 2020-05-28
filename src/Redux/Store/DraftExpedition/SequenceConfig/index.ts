@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux-loop'
 
+import * as DraftRewardSupplyCard from './DraftRewardSupplyCard'
 import * as DraftBranch from './DraftBranch'
 import * as Branches from './Branches'
 
@@ -8,11 +9,13 @@ import * as Branches from './Branches'
 ///////////
 
 export type State = {
+  DraftRewardSupplyCard: DraftRewardSupplyCard.State
   DraftBranch: DraftBranch.State
   Branches: Branches.State
 }
 
 export const initialState = {
+  DraftRewardSupplyCard: DraftRewardSupplyCard.initialState,
   DraftBranch: DraftBranch.initialState,
   Branches: Branches.initialState,
 }
@@ -22,11 +25,14 @@ export const initialState = {
 /////////////
 
 export const actions = {
+  DraftRewardSupplyCard: DraftRewardSupplyCard.actions,
   DraftBranch: DraftBranch.actions,
   Branches: Branches.actions,
 }
 
-export type Action = DraftBranch.Action
+export type Action =
+  | DraftRewardSupplyCard.Action
+  | DraftBranch.Action
   | Branches.Action
 
 /////////////
@@ -34,6 +40,7 @@ export type Action = DraftBranch.Action
 /////////////
 
 export const Reducer = combineReducers({
+  DraftRewardSupplyCard: DraftRewardSupplyCard.Reducer,
   DraftBranch: DraftBranch.Reducer,
   Branches: Branches.Reducer,
 })
@@ -43,6 +50,7 @@ export const Reducer = combineReducers({
 ///////////////
 
 export const selectors = {
+  DraftRewardSupplyCard: DraftRewardSupplyCard.selectors,
   DraftBranch: DraftBranch.selectors,
   Branches: Branches.selectors,
 }

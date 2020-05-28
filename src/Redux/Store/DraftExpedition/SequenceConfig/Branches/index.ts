@@ -21,7 +21,7 @@ export enum ActionTypes {
 
 export const actions = {
   noOp: () => createAction('NOOP'),
-  addBranch: (branch: types.NarrativeBranch) =>
+  addBranch: (branch: types.NarrativeBranch | types.RewardBranch) =>
     createAction(ActionTypes.ADD_BRANCH, branch),
 }
 
@@ -39,18 +39,52 @@ export const Reducer: LoopReducer<State, Action> = (
     case ActionTypes.ADD_BRANCH: {
       const { _id, id, type } = action.payload
 
-      switch(type) {
-        case "narrative": {
-          const { text, decisions } = action.payload
+      switch (type) {
+        case 'narrative': {
+          const { text, decisions } = action.payload as types.NarrativeBranch
 
           return {
             ...state,
             [_id]: {
               _id,
-              id,
+              id: id ? id : _id,
               type,
               text: text ? text : '',
-              decisions: decisions ? [...decisions] : false
+              decisions: decisions ? [...decisions] : false,
+            },
+          }
+        }
+
+        case 'reward': {
+          const {
+            rewardType,
+            treasure,
+            mage,
+            supply,
+          } = action.payload as types.RewardBranch
+
+          return {
+            ...state,
+            [_id]: {
+              _id,
+              id: id ? id : _id,
+              type,
+              rewardType: rewardType ? rewardType : 'regular',
+              treasure: {
+                ids: treasure?.ids ?? [],
+                tier1: treasure?.tier1 ?? 0,
+                tier2: treasure?.tier2 ?? 0,
+                tier3: treasure?.tier3 ?? 0,
+              },
+              mage: {
+                ids: mage?.ids ?? [],
+                randomAmount: mage?.randomAmount ?? 0,
+              },
+              supply: {
+                ids: supply?.ids ? supply.ids : [],
+                blueprints: supply?.blueprints ?? [],
+                bigPocket: supply?.bigPocket,
+              },
             },
           }
         }
@@ -65,7 +99,7 @@ export const Reducer: LoopReducer<State, Action> = (
             },
           }
         }
-      }  
+      }
     }
 
     default: {
@@ -86,16 +120,14 @@ export type BranchesStateSlice = {
   }
 }
 
-const getBranchesState = (state: BranchesStateSlice) => state.DraftExpedition.SequenceConfig.Branches
+const getBranchesState = (state: BranchesStateSlice) =>
+  state.DraftExpedition.SequenceConfig.Branches
 
 const getBranchIds = createSelector([getBranchesState], (branches) =>
   Object.keys(branches)
 )
 
-const getBranches = createSelector(
-  [getBranchesState], (
-  branches
-) =>
+const getBranches = createSelector([getBranchesState], (branches) =>
   Object.values(branches)
 )
 
