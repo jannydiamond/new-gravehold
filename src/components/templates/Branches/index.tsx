@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import * as types from 'types'
+
 import { RootState, selectors, actions } from 'Redux/Store'
 
 import { useModal } from 'hooks/useModal'
@@ -8,7 +10,6 @@ import { useModal } from 'hooks/useModal'
 import Accordion from 'components/organisms/Accordion'
 import Button from 'components/atoms/Button'
 import AddBranchModal from './AddBranchModal'
-import * as types from 'types'
 
 const mapStateToProps = (state: RootState) => ({
   branches: selectors.DraftExpedition.SequenceConfig.Branches.getBranches(
@@ -47,21 +48,58 @@ const Branches = ({
       {branches.length > 0 ? (
         <ul>
           {branches.map((branch: types.Branch) => {
-            return (
-              <li key={branch.id}>
-                <p>{branch.id} {branch.type}</p>
-                {branch.text && (<p>{branch.text}</p>)}
-                {branch.decisions && (
-                  <ul>
-                    {branch.decisions.map(
-                      (decision: types.Decision) => (
-                        <li key={decision._id}>{decision.text}</li>
-                      )
+            switch (branch.type) {
+              case 'narrative': {
+                const narrativeBranch = branch as types.NarrativeBranch
+
+                return (
+                  <li key={branch.id}>
+                    <p>Id: {branch.id}</p>
+                    <p>Type: {branch.type}</p>
+                    {narrativeBranch.text && (
+                      <p>Text: {narrativeBranch.text}</p>
                     )}
-                  </ul>
-                )}
-              </li>
-            )
+                    {narrativeBranch.decisions ? (
+                      <>
+                        <p>Desicions:</p>
+                        <ul>
+                          {narrativeBranch.decisions.map(
+                            (decision: types.Decision) => (
+                              <li key={decision._id}>{decision.text}</li>
+                            )
+                          )}
+                        </ul>
+                      </>
+                    ) : (
+                      <p>No Desicions</p>
+                    )}
+                  </li>
+                )
+              }
+
+              case 'reward': {
+                const rewardBranch = branch as types.RewardBranch
+
+                return (
+                  <li key={branch.id}>
+                    <p>Id: {branch.id}</p>
+                    <p>Type: {branch.type}</p>
+                    {rewardBranch.rewardType && (
+                      <p>Reward type: {rewardBranch.rewardType}</p>
+                    )} 
+                  </li>
+                )
+              }
+
+              default: {
+                return (
+                  <li key={branch.id}>
+                    <p>Id: {branch.id}</p>
+                    <p>Type: {branch.type}</p>
+                  </li>
+                )
+              }
+            }
           })}
         </ul>
       ) : (

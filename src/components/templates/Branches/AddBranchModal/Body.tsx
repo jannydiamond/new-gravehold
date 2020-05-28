@@ -1,66 +1,39 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import * as types from 'types'
 
+import { RootState, selectors } from 'Redux/Store'
+
 import Fieldset from 'components/molecules/Fieldset'
-import FormGroupInputText from 'components/molecules/FormGroupInputText'
-import FormGroupTextarea from 'components/molecules/FormGroupTextarea'
-import FormGroupSelect from 'components/molecules/FormGroupSelect'
 import ModalBodyWrapper from 'components/atoms/ModalBodyWrapper'
+import BaseBranch from './BaseBranch'
+import NarrativeBranch from './NarrativeBranch'
+import RewardBranch from './RewardBranch'
 
-const branchTypeOptions: types.BranchTypeOptions = [
-  { value: 'narrative', label: 'narrative' },
-  { value: 'battle', label: 'battle' },
-  { value: 'reward', label: 'reward' },
-]
+const mapStateToProps = (state: RootState) => ({
+  draftBranch: selectors.DraftExpedition.SequenceConfig.DraftBranch.getDraftBranchState(
+    state
+  ),
+})
 
-type Props = {
-  branch: types.BranchBase | types.Branch
-  changeId: (event: any) => void
-  changeType: (selectOption: types.BranchTypeOption) => void
-  changeText: (event: any) => void
-  changeDecisions: (event: any) => void
-}
+type Props = ReturnType<typeof mapStateToProps> & {}
 
-const Body = ({
-  branch,
-  changeId,
-  changeType,
-  changeText,
-  changeDecisions,
-}: Props) => {
-
-  const defaultValue = branchTypeOptions.find(
-    (option) => option.value === branch.type
-  )
-
+const Body = ({ draftBranch }: Props) => {
   const renderBranch = (branch: types.Branch) => {
     switch (branch.type) {
       case 'narrative': {
         return (
-          <>
-            <FormGroupTextarea
-              id="description"
-              label="Text"
-              onChange={changeText}
-              defaultValue={branch.text}
-            />
-            <p>Add multiple decisions by separating them with ';' followed by a SPACE</p>
-            <FormGroupInputText
-              id="decisions"
-              label="Decisions"
-              onChange={changeDecisions}
-              defaultValue={branch.decisions ? branch.decisions.map(decision => decision.text) : ''}
-            />
-          </>
+          <NarrativeBranch draftBranch={draftBranch as types.NarrativeBranch} />
         )
       }
 
+      case 'reward': {
+        return <RewardBranch draftBranch={draftBranch as types.RewardBranch} />
+      }
+
       default: {
-        return (
-          <>
-          </>
-        )
+        return <></>
       }
     }
   }
@@ -68,25 +41,12 @@ const Body = ({
   return (
     <ModalBodyWrapper>
       <Fieldset legend="Branches">
-        <FormGroupInputText
-          id="branchId"
-          label="Branch id"
-          onChange={changeId}
-          defaultValue={branch.id}
-          required={true}
-        />
-        <FormGroupSelect 
-          options={branchTypeOptions}
-          id="branchType"
-          label="Branch type"
-          onChange={changeType}
-          defaultValue={defaultValue}
-        />
+        <BaseBranch draftBranch={draftBranch as types.BranchBase} />
 
-        {renderBranch(branch as types.Branch)}
+        {renderBranch(draftBranch as types.Branch)}
       </Fieldset>
     </ModalBodyWrapper>
   )
 }
 
-export default React.memo(Body)
+export default connect(mapStateToProps)(React.memo(Body))
