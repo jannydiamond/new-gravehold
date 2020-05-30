@@ -1,5 +1,4 @@
 import React from 'react'
-import shortid from 'shortid'
 import { connect } from 'react-redux'
 
 import { actions } from 'Redux/Store'
@@ -10,40 +9,31 @@ import Button from 'components/atoms/Button'
 
 const mapDispatchToProps = {
   addBranch: actions.DraftExpedition.SequenceConfig.Branches.addBranch,
+  clearDraftBranch: actions.DraftExpedition.SequenceConfig.DraftBranch.clearDraftBranch,
 }
 
 type Props = typeof mapDispatchToProps & {
   modal: any,
   branch: types.Branch
-  clearState: () => void
-  handleError: (error: string) => void
 }
 
 const Footer = ({
   modal,
   branch,
-  clearState,
   addBranch,
-  handleError,
+  clearDraftBranch
 }: Props) => {
 
   const handleAddBranch = () => {
-    console.log(branch.id)
-    if (branch.id === "") {
-      handleError('The branch id is manatory!')
-      return
-    }
-
     addBranch({
       ...branch,
-      _id: shortid.generate()
     })
-    clearState()
+    clearDraftBranch()
     modal.hide()
   }
 
   const handleCancel = () => {
-    clearState()
+    clearDraftBranch()
     modal.hide()
   }
 

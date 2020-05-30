@@ -21,17 +21,20 @@ export type Decision = {
   text: string
 }
 
-export type NarrativeBranch = {
+export type BranchBase = {
+  _id: string
+  id: string
+  type: BranchType
+}
+
+export type NarrativeBranch = BranchBase & {
+  type: BranchType
   text: string
   decisions: Decision[] | false
   nextBranchId?: string[]
 }
 
-export type Branch = {
-  _id: string
-  id: string
-  type: BranchType
-} & NarrativeBranch
+export type Branch = NarrativeBranch
 
 export type Branches = {
   [id: string]: Branch

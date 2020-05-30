@@ -15,12 +15,11 @@ const branchTypeOptions: types.BranchTypeOptions = [
 ]
 
 type Props = {
-  branch: types.Branch
+  branch: types.BranchBase | types.Branch
   changeId: (event: any) => void
   changeType: (selectOption: types.BranchTypeOption) => void
   changeText: (event: any) => void
   changeDecisions: (event: any) => void
-  error: string | null
 }
 
 const Body = ({
@@ -29,16 +28,45 @@ const Body = ({
   changeType,
   changeText,
   changeDecisions,
-  error,
 }: Props) => {
 
   const defaultValue = branchTypeOptions.find(
     (option) => option.value === branch.type
   )
 
+  const renderBranch = (branch: types.Branch) => {
+    switch (branch.type) {
+      case 'narrative': {
+        return (
+          <>
+            <FormGroupTextarea
+              id="description"
+              label="Text"
+              onChange={changeText}
+              defaultValue={branch.text}
+            />
+            <p>Add multiple decisions by separating them with ';' followed by a SPACE</p>
+            <FormGroupInputText
+              id="decisions"
+              label="Decisions"
+              onChange={changeDecisions}
+              defaultValue={branch.decisions ? branch.decisions.map(decision => decision.text) : ''}
+            />
+          </>
+        )
+      }
+
+      default: {
+        return (
+          <>
+          </>
+        )
+      }
+    }
+  }
+
   return (
     <ModalBodyWrapper>
-      {error && (<p>{error}</p>)}
       <Fieldset legend="Branches">
         <FormGroupInputText
           id="branchId"
@@ -55,23 +83,7 @@ const Body = ({
           defaultValue={defaultValue}
         />
 
-        {branch.type === 'narrative' && (
-          <>
-            <FormGroupTextarea 
-              id="description"
-              label="Text"
-              onChange={changeText}
-              defaultValue={branch.text}
-            />
-            <p>Add multiple decisions by separating them with ';' followed by a SPACE</p>
-            <FormGroupInputText
-              id="decisions"
-              label="Decisions"
-              onChange={changeDecisions}
-              defaultValue={branch.decisions ? branch.decisions.map(decision => decision.text) : ''}
-            />
-          </>
-        )}
+        {renderBranch(branch as types.Branch)}
       </Fieldset>
     </ModalBodyWrapper>
   )

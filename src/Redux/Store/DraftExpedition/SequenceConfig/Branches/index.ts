@@ -21,7 +21,7 @@ export enum ActionTypes {
 
 export const actions = {
   noOp: () => createAction('NOOP'),
-  addBranch: (branch: types.Branch) =>
+  addBranch: (branch: types.NarrativeBranch) =>
     createAction(ActionTypes.ADD_BRANCH, branch),
 }
 
@@ -45,11 +45,11 @@ export const Reducer: LoopReducer<State, Action> = (
 
           return {
             ...state,
-            [id]: {
+            [_id]: {
               _id,
               id,
               type,
-              text,
+              text: text ? text : '',
               decisions: decisions ? [...decisions] : false
             },
           }
@@ -58,7 +58,7 @@ export const Reducer: LoopReducer<State, Action> = (
         default: {
           return {
             ...state,
-            [id]: {
+            [_id]: {
               _id,
               id,
               type,

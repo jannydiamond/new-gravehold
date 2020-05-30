@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import * as types from 'types'
+
 import { RootState, selectors } from 'Redux/Store'
 
 import { saveToFile, copyToClipboard } from 'helpers'
@@ -30,7 +32,7 @@ const Preview = ({
   branches,
 }: Props) => {
 
-  const dataBranches = branches.reduce((branches, branch) => {
+  const dataBranches = branches.reduce((branches, branch: types.Branch) => {
     switch(branch.type) {
       case "narrative": {
 

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux-loop'
 
+import * as DraftBranch from './DraftBranch'
 import * as Branches from './Branches'
 
 ///////////
@@ -7,10 +8,12 @@ import * as Branches from './Branches'
 ///////////
 
 export type State = {
+  DraftBranch: DraftBranch.State
   Branches: Branches.State
 }
 
 export const initialState = {
+  DraftBranch: DraftBranch.initialState,
   Branches: Branches.initialState,
 }
 
@@ -19,16 +22,19 @@ export const initialState = {
 /////////////
 
 export const actions = {
+  DraftBranch: DraftBranch.actions,
   Branches: Branches.actions,
 }
 
-export type Action = Branches.Action
+export type Action = DraftBranch.Action
+  | Branches.Action
 
 /////////////
 // REDUCER //
 /////////////
 
 export const Reducer = combineReducers({
+  DraftBranch: DraftBranch.Reducer,
   Branches: Branches.Reducer,
 })
 
@@ -37,5 +43,6 @@ export const Reducer = combineReducers({
 ///////////////
 
 export const selectors = {
+  DraftBranch: DraftBranch.selectors,
   Branches: Branches.selectors,
 }
