@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { RootState, selectors } from 'Redux/Store'
+import { RootState, selectors, actions } from 'Redux/Store'
 
 import { useModal } from 'hooks/useModal'
 
@@ -16,19 +16,29 @@ const mapStateToProps = (state: RootState) => ({
   ),
 })
 
-type Props = ReturnType<typeof mapStateToProps> & {}
+const mapDispatchToProps = {
+  draftAddBranch: actions.DraftExpedition.SequenceConfig.DraftBranch.draftAddBranch,
+}
+
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & {}
 
 const Branches = ({
-  branches
+  branches,
+  draftAddBranch,
 }: Props) => {
   const addBranchModal = useModal()
+
+  const handleAddBranch = () => {
+    addBranchModal.show()
+    draftAddBranch()
+  }
 
   return (
     <Accordion id="branches" title="Branches" open>
       <Button
         type="button"
         style={{ display: 'block' }}
-        onClick={() => addBranchModal.show()}
+        onClick={handleAddBranch}
       >
         Add branch
       </Button>
@@ -62,5 +72,6 @@ const Branches = ({
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(React.memo(Branches))

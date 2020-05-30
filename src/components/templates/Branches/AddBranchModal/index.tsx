@@ -1,49 +1,60 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+
 import shortid from 'shortid'
+
+import { RootState, selectors, actions } from 'Redux/Store'
 
 import * as types from 'types'
 
 import Body from './Body'
 import Footer from './Footer'
 
-const initialState: types.Branch = {
+const mapStateToProps = (state: RootState) => ({
+  draftBranch: selectors.DraftExpedition.SequenceConfig.DraftBranch.getDraftBranchState(state),
+})
+
+const mapDispatchToProps = {
+  updateDraftBranch: actions.DraftExpedition.SequenceConfig.DraftBranch.updateDraftBranch,
+  saveBranch: actions.DraftExpedition.SequenceConfig.Branches.addBranch,
+}
+
+const initialState: types.BranchBase = {
   _id: '',
   id: '',
   type: 'narrative',
-  text: '',
-  decisions: false
 }
 
-type Props = {
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & {
   modal: types.Modal
 }
 
 const AddBranchModal = ({
-  modal
+  modal,
+  draftBranch,
+  updateDraftBranch,
+  saveBranch,
 }: Props) => {
-  const [branch, setBranch] = useState<types.Branch>(initialState)
-  const [error, setError] = useState<string | null>(null)
 
   const handleBranchIdChange = (event: any) => {
-    setBranch({
-      ...branch,
+    updateDraftBranch({
+      ...draftBranch,
       id: event.target.value,
     })
   }
 
   const handleBranchTypeChange = (selectOption: types.BranchTypeOption) => {
-    const id = branch.id
-    
-    setBranch({
+    updateDraftBranch({
       ...initialState,
-      id: id,
+      _id: draftBranch.id,
+      id: draftBranch.id,
       type: selectOption.value,
     })
   }
 
   const handleBranchTextChange = (event: any) => {
-    setBranch({
-      ...branch,
+    updateDraftBranch({
+      ...draftBranch,
       text: event.target.value,
     })
   }
@@ -51,9 +62,8 @@ const AddBranchModal = ({
   const handleBranchDecisionsChange = (event: any) => {
     const decisions =
       (event.target.value && event.target.value.split('; ')) ?? []
-    
-    setBranch({
-      ...branch,
+    updateDraftBranch({
+      ...draftBranch,
       decisions: decisions.map((decision: string) => {
         return {
           _id: shortid.generate(),
@@ -63,28 +73,22 @@ const AddBranchModal = ({
     })
   }
 
-  const handleClearState = () => {
-    setBranch(initialState)
-  }
-
-  const handleError = (error: string) => {
-    setError(error)
-  }
-
   return (
     <modal.RenderModal
       titleLabel="Add branch"
-      footer={<Footer modal={modal} branch={branch} clearState={handleClearState} handleError={handleError} />}>
+      footer={<Footer modal={modal} branch={draftBranch as types.Branch} />}>
       <Body 
-        branch={branch} 
+        branch={draftBranch} 
         changeId={handleBranchIdChange} 
         changeType={handleBranchTypeChange}
         changeText={handleBranchTextChange}
         changeDecisions={handleBranchDecisionsChange}
-        error={error}
-         />
+      />
     </modal.RenderModal>
   )
 }
 
-export default React.memo(AddBranchModal)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(AddBranchModal))
