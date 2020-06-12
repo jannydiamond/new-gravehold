@@ -21,6 +21,7 @@ export const initialState: State = {}
 
 export enum ActionTypes {
   DRAFT_ADD_REWARD_SUPPLY_CARD = 'DraftExpedition/SequenceConfig/DraftRewardSupplyCard/DRAFT_ADD_REWARD_SUPPLY_CARD',
+  DRAFT_ADD_BATTLE_REWARD_SUPPLY_CARD = 'DraftExpedition/SequenceConfig/DraftRewardSupplyCard/DRAFT_ADD_BATTLE_REWARD_SUPPLY_CARD',
   DRAFT_EDIT_REWARD_SUPPLY_CARD = 'DraftExpedition/SequenceConfig/DraftRewardSupplyCard/DRAFT_EDIT_REWARD_SUPPLY_CARD',
   DRAFT_DELETE_REWARD_SUPPLY_CARD = 'DraftExpedition/SequenceConfig/DraftRewardSupplyCard/DRAFT_DELETE_REWARD_SUPPLY_CARD',
   CLEAR_DRAFT_REWARD_SUPPLY_CARD = 'DraftExpedition/SequenceConfig/DraftRewardSupplyCard/CLEAR_DRAFT_REWARD_SUPPLY_CARD',
@@ -30,6 +31,8 @@ export const actions = {
   noOp: () => createAction('NOOP'),
   draftAddRewardSupplyCard: () =>
     createAction(ActionTypes.DRAFT_ADD_REWARD_SUPPLY_CARD),
+  draftAddBattleRewardSupplyCard: (configId: string) =>
+    createAction(ActionTypes.DRAFT_ADD_BATTLE_REWARD_SUPPLY_CARD, configId),
   draftEditRewardSupplyCard: (blueprint: types.Blueprint) =>
     createAction(ActionTypes.DRAFT_EDIT_REWARD_SUPPLY_CARD, blueprint),
   draftDeleteRewardSupplyCard: (blueprint: types.Blueprint) =>
@@ -55,6 +58,20 @@ export const Reducer: LoopReducer<State, Action> = (
       return {
         [id]: {
           _id: id,
+          type: 'Gem',
+          operation: 'ANY',
+        },
+        ...state,
+      }
+    }
+
+    case ActionTypes.DRAFT_ADD_BATTLE_REWARD_SUPPLY_CARD: {
+      const id = shortid.generate()
+
+      return {
+        [id]: {
+          _id: id,
+          configId: action.payload,
           type: 'Gem',
           operation: 'ANY',
         },

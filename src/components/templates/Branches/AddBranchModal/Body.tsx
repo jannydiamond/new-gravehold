@@ -10,6 +10,7 @@ import ModalBodyWrapper from 'components/atoms/ModalBodyWrapper'
 import BaseBranch from './BaseBranch'
 import NarrativeBranch from './NarrativeBranch'
 import RewardBranch from './RewardBranch'
+import BattleBranch from './BattleBranch'
 
 const mapStateToProps = (state: RootState) => ({
   draftBranch: selectors.DraftExpedition.SequenceConfig.DraftBranch.getDraftBranchState(
@@ -30,6 +31,10 @@ const Body = ({ draftBranch }: Props) => {
 
       case 'reward': {
         return <RewardBranch draftBranch={draftBranch as types.RewardBranch} />
+      }
+
+      case 'battle': {
+        return <BattleBranch draftBranch={draftBranch as types.BattleBranch} />
       }
 
       default: {

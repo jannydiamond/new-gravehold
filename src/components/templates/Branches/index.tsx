@@ -18,15 +18,13 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = {
-  draftAddBranch: actions.DraftExpedition.SequenceConfig.DraftBranch.draftAddBranch,
+  draftAddBranch:
+    actions.DraftExpedition.SequenceConfig.DraftBranch.draftAddBranch,
 }
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & {}
 
-const Branches = ({
-  branches,
-  draftAddBranch,
-}: Props) => {
+const Branches = ({ branches, draftAddBranch }: Props) => {
   const addBranchModal = useModal()
 
   const handleAddBranch = () => {
@@ -86,7 +84,22 @@ const Branches = ({
                     <p>Type: {branch.type}</p>
                     {rewardBranch.rewardType && (
                       <p>Reward type: {rewardBranch.rewardType}</p>
-                    )} 
+                    )}
+                  </li>
+                )
+              }
+
+              case 'battle': {
+                const battleBranch = branch as types.BattleBranch
+
+                return (
+                  <li key={branch.id}>
+                    <p>Id: {branch.id}</p>
+                    <p>Type: {branch.type}</p>
+                    <p>Tier: {battleBranch.tier}</p>
+                    {battleBranch.nemesisId && (
+                      <p>Nemesis: {battleBranch.nemesisId}</p>
+                    )}
                   </li>
                 )
               }

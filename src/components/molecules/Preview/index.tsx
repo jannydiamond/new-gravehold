@@ -148,6 +148,286 @@ const Preview = ({
         }
       }
 
+      case 'battle': {
+        const battleBranch = branch as types.BattleBranch
+
+        const newBranch = {
+          type: branch.type,
+          config: {
+            tier: battleBranch.tier,
+            newUBNCards: battleBranch.newUBNCards,
+            treasure: {
+              level: battleBranch.treasure.level,
+              hasTreasure: battleBranch.treasure.hasTreasure,
+            },
+          },
+        }
+
+        battleBranch.nemesisId &&
+          Object.assign(newBranch.config, {
+            nemesisId: battleBranch.nemesisId,
+          })
+
+        battleBranch.specialRules &&
+          Object.assign(newBranch.config, {
+            specialRules: battleBranch.specialRules,
+          })
+
+        battleBranch.onLoss &&
+          Object.assign(newBranch.config, {
+            onLoss: battleBranch.onLoss,
+          })
+
+        if (battleBranch?.winRewards?.hasOwnProperty('rewardType')) {
+          const winRewardTreasure = {}
+          const winRewardMage = {}
+          const winRewardSupply = {}
+
+          const winRewardTreasureIds =
+            battleBranch.winRewards?.treasure?.ids ?? []
+
+          const winRewardRandomTreasuresTier1 =
+            battleBranch.winRewards?.treasure?.tier1 &&
+            battleBranch.winRewards?.treasure?.tier1 !== 0
+              ? Array(battleBranch.winRewards.treasure.tier1).fill({
+                  random: true,
+                  level: 1,
+                })
+              : []
+
+          const winRewardRandomTreasuresTier2 =
+            battleBranch.winRewards?.treasure?.tier2 &&
+            battleBranch.winRewards?.treasure?.tier2 !== 0
+              ? Array(battleBranch.winRewards.treasure.tier2).fill({
+                  random: true,
+                  level: 2,
+                })
+              : []
+
+          const winRewardRandomTreasuresTier3 =
+            battleBranch.winRewards?.treasure?.tier3 &&
+            battleBranch.winRewards?.treasure?.tier3 !== 0
+              ? Array(battleBranch.winRewards.treasure.tier3).fill({
+                  random: true,
+                  level: 3,
+                })
+              : []
+
+          if (
+            winRewardTreasureIds.length > 0 ||
+            winRewardRandomTreasuresTier1.length > 0 ||
+            winRewardRandomTreasuresTier2.length > 0 ||
+            winRewardRandomTreasuresTier3.length > 0
+          ) {
+            Object.assign(winRewardTreasure, {
+              ids: [
+                ...winRewardTreasureIds,
+                ...winRewardRandomTreasuresTier1,
+                ...winRewardRandomTreasuresTier2,
+                ...winRewardRandomTreasuresTier3,
+              ],
+            })
+          }
+
+          const winRewardMageIds = battleBranch.winRewards?.mage?.ids ?? []
+
+          const winRewardRandomMageAmount =
+            battleBranch.winRewards?.mage?.randomAmount &&
+            battleBranch.winRewards?.mage?.randomAmount !== 0
+              ? Array(battleBranch.winRewards.mage.randomAmount).fill({
+                  random: true,
+                })
+              : []
+
+          if (
+            winRewardMageIds.length > 0 ||
+            winRewardRandomMageAmount.length > 0
+          ) {
+            Object.assign(winRewardMage, {
+              ids: [...winRewardMageIds, ...winRewardRandomMageAmount],
+            })
+          }
+
+          const winRewardSupplyIds = battleBranch.winRewards?.supply?.ids ?? []
+          const winRewardSupplyBlueprints =
+            battleBranch.winRewards?.supply?.blueprints ?? []
+          const winRewardSupplyBigPocket =
+            battleBranch.winRewards?.supply?.bigPocket ?? false
+
+          if (
+            winRewardSupplyIds.length > 0 ||
+            winRewardSupplyBlueprints.length > 0
+          ) {
+            const blueprints = winRewardSupplyBlueprints.map(
+              (blueprint: types.Blueprint) => {
+                return {
+                  type: blueprint.type,
+                  operation: blueprint.operation,
+                  threshold: blueprint.threshold,
+                  values: blueprint.values,
+                }
+              }
+            )
+
+            Object.assign(winRewardSupply, {
+              ids: [...winRewardSupplyIds, ...blueprints],
+              bigPocket: winRewardSupplyBigPocket,
+            })
+          }
+
+          Object.assign(newBranch.config, {
+            winRewards:
+              Object.keys(battleBranch.winRewards).length > 0
+                ? {
+                    type: battleBranch.winRewards.rewardType,
+                    treasure:
+                      Object.keys(winRewardTreasure).length > 0
+                        ? winRewardTreasure
+                        : undefined,
+                    mage:
+                      Object.keys(winRewardMage).length > 0
+                        ? winRewardMage
+                        : undefined,
+                    supply:
+                      Object.keys(winRewardSupply).length > 0
+                        ? winRewardSupply
+                        : undefined,
+                  }
+                : undefined,
+          })
+        }
+
+        battleBranch.lossRewards &&
+          Object.assign(newBranch.config, {
+            lossRewards:
+              battleBranch.lossRewards.length > 0
+                ? battleBranch.lossRewards.map(
+                    (lossReward: types.RewardConfig) => {
+                      const lossRewardTreasure = {}
+                      const lossRewardMage = {}
+                      const lossRewardSupply = {}
+
+                      const lossRewardTreasureIds =
+                        lossReward?.treasure?.ids ?? []
+
+                      const lossRewardRandomTreasuresTier1 =
+                        lossReward?.treasure?.tier1 &&
+                        lossReward?.treasure?.tier1 !== 0
+                          ? Array(lossReward.treasure.tier1).fill({
+                              random: true,
+                              level: 1,
+                            })
+                          : []
+
+                      const lossRewardRandomTreasuresTier2 =
+                        lossReward?.treasure?.tier2 &&
+                        lossReward?.treasure?.tier2 !== 0
+                          ? Array(lossReward.treasure.tier2).fill({
+                              random: true,
+                              level: 2,
+                            })
+                          : []
+
+                      const lossRewardRandomTreasuresTier3 =
+                        lossReward?.treasure?.tier3 &&
+                        lossReward?.treasure?.tier3 !== 0
+                          ? Array(lossReward.treasure.tier3).fill({
+                              random: true,
+                              level: 3,
+                            })
+                          : []
+
+                      if (
+                        lossRewardTreasureIds.length > 0 ||
+                        lossRewardRandomTreasuresTier1.length > 0 ||
+                        lossRewardRandomTreasuresTier2.length > 0 ||
+                        lossRewardRandomTreasuresTier3.length > 0
+                      ) {
+                        Object.assign(lossRewardTreasure, {
+                          ids: [
+                            ...lossRewardTreasureIds,
+                            ...lossRewardRandomTreasuresTier1,
+                            ...lossRewardRandomTreasuresTier2,
+                            ...lossRewardRandomTreasuresTier3,
+                          ],
+                        })
+                      }
+
+                      const lossRewardMageIds = lossReward?.mage?.ids ?? []
+
+                      const lossRewardRandomMageAmount =
+                        lossReward?.mage?.randomAmount &&
+                        lossReward?.mage?.randomAmount !== 0
+                          ? Array(lossReward.mage.randomAmount).fill({
+                              random: true,
+                            })
+                          : []
+
+                      if (
+                        lossRewardMageIds.length > 0 ||
+                        lossRewardRandomMageAmount.length > 0
+                      ) {
+                        Object.assign(lossRewardMage, {
+                          ids: [
+                            ...lossRewardMageIds,
+                            ...lossRewardRandomMageAmount,
+                          ],
+                        })
+                      }
+
+                      const lossRewardSupplyIds = lossReward?.supply?.ids ?? []
+                      const lossRewardSupplyBlueprints =
+                        lossReward?.supply?.blueprints ?? []
+                      const lossRewardSupplyBigPocket =
+                        lossReward?.supply?.bigPocket ?? false
+
+                      if (
+                        lossRewardSupplyIds.length > 0 ||
+                        lossRewardSupplyBlueprints.length > 0
+                      ) {
+                        const blueprints = lossRewardSupplyBlueprints.map(
+                          (blueprint: types.Blueprint) => {
+                            return {
+                              type: blueprint.type,
+                              operation: blueprint.operation,
+                              threshold: blueprint.threshold,
+                              values: blueprint.values,
+                            }
+                          }
+                        )
+
+                        Object.assign(lossRewardSupply, {
+                          ids: [...lossRewardSupplyIds, ...blueprints],
+                          bigPocket: lossRewardSupplyBigPocket,
+                        })
+                      }
+
+                      return {
+                        type: lossReward.rewardType,
+                        treasure:
+                          Object.keys(lossRewardTreasure).length > 0
+                            ? lossRewardTreasure
+                            : undefined,
+                        mage:
+                          Object.keys(lossRewardMage).length > 0
+                            ? lossRewardMage
+                            : undefined,
+                        supply:
+                          Object.keys(lossRewardSupply).length > 0
+                            ? lossRewardSupply
+                            : undefined,
+                      }
+                    }
+                  )
+                : undefined,
+          })
+
+        return {
+          ...branches,
+          [branch.id]: newBranch,
+        }
+      }
+
       default: {
         return {
           ...branches,

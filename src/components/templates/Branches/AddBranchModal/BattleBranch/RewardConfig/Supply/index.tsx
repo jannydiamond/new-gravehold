@@ -23,7 +23,7 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = {
   addSupplyCard:
     actions.DraftExpedition.SequenceConfig.DraftRewardSupplyCard
-      .draftAddRewardSupplyCard,
+      .draftAddBattleRewardSupplyCard,
   editSupplyCard:
     actions.DraftExpedition.SequenceConfig.DraftRewardSupplyCard
       .draftEditRewardSupplyCard,
@@ -34,13 +34,13 @@ const mapDispatchToProps = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps & {
-    draftBranch: types.RewardBranch
-    updateDraftBranch: (branch: types.Branch) => void
+    config: types.BattleRewardConfig
+    updateDraftRewardConfig: (config: types.BattleRewardConfig) => void
   }
 
 const Supply = ({
-  draftBranch,
-  updateDraftBranch,
+  config,
+  updateDraftRewardConfig,
   blueprints,
   addSupplyCard,
   editSupplyCard,
@@ -62,27 +62,31 @@ const Supply = ({
       ? selectOptions.map((option: types.SelectOption) => option.value)
       : []
 
-    updateDraftBranch({
-      ...draftBranch,
-      supply: {
-        ...draftBranch.supply,
-        ids: [...selectedSupplyIds],
-      },
+    updateDraftRewardConfig({
+      ...config,
+      ...Object.assign({
+        supply: {
+          ...config.supply,
+          ids: [...selectedSupplyIds],
+        },
+      }),
     })
   }
 
   const handleBigPocketChange = (event: React.ChangeEvent) => {
-    updateDraftBranch({
-      ...draftBranch,
-      supply: {
-        ...draftBranch.supply,
-        bigPocket: (event.currentTarget as HTMLInputElement).checked,
-      },
+    updateDraftRewardConfig({
+      ...config,
+      ...Object.assign({
+        supply: {
+          ...config.supply,
+          bigPocket: (event.currentTarget as HTMLInputElement).checked,
+        },
+      }),
     })
   }
 
   const handleAddSupplyCard = () => {
-    addSupplyCard()
+    addSupplyCard(config._id)
   }
 
   const handleEditSupplyCard = (blueprint: types.Blueprint) => {
@@ -93,17 +97,22 @@ const Supply = ({
     deleteSupplyCard(blueprint)
   }
 
-  const renderSupplyBlueprints = (blueprints: types.Blueprint[]) => {
-    return blueprints.map((blueprint: types.Blueprint) => {
-      return (
-        <SupplyCardBlueprint
-          key={blueprint._id}
-          blueprint={blueprint}
-          handleChange={handleEditSupplyCard}
-          handleDelete={handleDeleteSupplyCard}
-        />
-      )
-    })
+  const renderSupplyBlueprints = (
+    blueprints: types.Blueprint[],
+    configId: string
+  ) => {
+    return blueprints
+      .filter((blueprint: types.Blueprint) => blueprint.configId === configId)
+      .map((blueprint: types.Blueprint) => {
+        return (
+          <SupplyCardBlueprint
+            key={blueprint._id}
+            blueprint={blueprint}
+            handleChange={handleEditSupplyCard}
+            handleDelete={handleDeleteSupplyCard}
+          />
+        )
+      })
   }
 
   return (
@@ -112,7 +121,7 @@ const Supply = ({
         id="rewardSupplyBigPocket"
         label="Big Pocket Mode"
         onChange={handleBigPocketChange}
-        defaultChecked={draftBranch?.supply?.bigPocket ?? false}
+        defaultChecked={config?.supply?.bigPocket ?? false}
       />
       <FormGroupSelect
         options={supplyOptions}
@@ -124,7 +133,7 @@ const Supply = ({
       <h3>Random supply cards</h3>
       <Button onClick={handleAddSupplyCard}>Add random supply card</Button>
       {blueprints ? (
-        renderSupplyBlueprints(blueprints)
+        renderSupplyBlueprints(blueprints, config._id)
       ) : (
         <p>No supply cards added</p>
       )}

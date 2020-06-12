@@ -21,8 +21,9 @@ export enum ActionTypes {
 
 export const actions = {
   noOp: () => createAction('NOOP'),
-  addBranch: (branch: types.NarrativeBranch | types.RewardBranch) =>
-    createAction(ActionTypes.ADD_BRANCH, branch),
+  addBranch: (
+    branch: types.NarrativeBranch | types.RewardBranch | types.BattleBranch
+  ) => createAction(ActionTypes.ADD_BRANCH, branch),
 }
 
 export type Action = ActionsUnion<typeof actions>
@@ -85,6 +86,36 @@ export const Reducer: LoopReducer<State, Action> = (
                 blueprints: supply?.blueprints ?? [],
                 bigPocket: supply?.bigPocket,
               },
+            },
+          }
+        }
+
+        case 'battle': {
+          const {
+            tier,
+            nemesisId,
+            newUBNCards,
+            treasure,
+            specialRules,
+            onLoss,
+            lossRewards,
+            winRewards,
+          } = action.payload as types.BattleBranch
+
+          return {
+            ...state,
+            [_id]: {
+              _id,
+              id: id ? id : _id,
+              tier,
+              type,
+              nemesisId: nemesisId ?? '',
+              newUBNCards,
+              treasure,
+              specialRules,
+              onLoss: onLoss && 'skip',
+              lossRewards: lossRewards,
+              winRewards: winRewards,
             },
           }
         }

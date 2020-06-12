@@ -10,11 +10,11 @@ import FormGroupSelect from 'components/molecules/FormGroupSelect'
 import FormGroupInputText from 'components/molecules/FormGroupInputText'
 
 type Props = {
-  draftBranch: types.RewardBranch
-  updateDraftBranch: (branch: types.Branch) => void
+  config: types.BattleRewardConfig
+  updateDraftRewardConfig: (config: types.BattleRewardConfig) => void
 }
 
-const Mages = ({ draftBranch, updateDraftBranch }: Props) => {
+const Mages = ({ config, updateDraftRewardConfig }: Props) => {
   const dataMages: aerTypes.Mage[] = Object.values(
     DATA.normalizedData.ENG.mages
   )
@@ -31,22 +31,26 @@ const Mages = ({ draftBranch, updateDraftBranch }: Props) => {
       ? selectOptions.map((option: types.SelectOption) => option.value)
       : []
 
-    updateDraftBranch({
-      ...draftBranch,
-      mage: {
-        ...draftBranch.mage,
-        ids: [...selectedMageIds],
-      },
+    updateDraftRewardConfig({
+      ...config,
+      ...Object.assign({
+        mage: {
+          ...config.mage,
+          ids: [...selectedMageIds],
+        },
+      }),
     })
   }
 
   const handleMageRandomAmountChange = (event: React.ChangeEvent) => {
-    updateDraftBranch({
-      ...draftBranch,
-      mage: {
-        ...draftBranch.mage,
-        randomAmount: parseInt((event.target as HTMLInputElement).value),
-      },
+    updateDraftRewardConfig({
+      ...config,
+      ...Object.assign({
+        mage: {
+          ...config.mage,
+          randomAmount: parseInt((event.target as HTMLInputElement).value),
+        },
+      }),
     })
   }
 

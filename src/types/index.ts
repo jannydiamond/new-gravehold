@@ -49,6 +49,7 @@ export type SupplyCardOperation = '<' | '>' | '=' | '<=' | '>=' | 'ANY' | 'OR'
 
 export type Blueprint = {
   _id: string
+  configId?: string
   type: SupplyCardType
   operation: SupplyCardOperation
   threshold?: number
@@ -78,9 +79,64 @@ export type RewardBranch = BranchBase & {
   nextBranchId?: string
 }
 
+export type RewardConfig = {
+  rewardType: RewardType
+  treasure?: {
+    ids: (string | RandomTreasure)[]
+    tier1: number
+    tier2: number
+    tier3: number
+  }
+  mage?: {
+    ids: (string | RandomMage)[]
+    randomAmount: number
+  }
+  supply?: {
+    ids: (string | Blueprint)[]
+    blueprints: Blueprint[]
+    bigPocket?: boolean
+  }
+}
+
+// BattleBranch
+
+export type NewUBNCardsTypes = 'custom' | 'regular'
+export type NewUBNCardsCustomTyp = {
+  type: 'custom'
+  ids?: string[]
+}
+export type NewUBNCardsRegularTyp = {
+  type: 'regular'
+  addRandom?: boolean
+}
+
+export type NewUBNCards = NewUBNCardsCustomTyp | NewUBNCardsRegularTyp
+
+export type BattleBranch = BranchBase & {
+  type: BranchType
+  tier: aerTypes.NemesisTier
+  nemesisId?: string
+  newUBNCards: NewUBNCards
+  specialRules?: string
+  treasure: {
+    level: aerTypes.TreasureLevel
+    hasTreasure: boolean
+  }
+  onLoss?: 'skip' | boolean
+  lossRewards?: RewardConfig[]
+  winRewards?: RewardConfig
+}
+
+export type BattleRewardConfigType = 'win' | 'loss'
+
+export type BattleRewardConfig = RewardConfig & {
+  _id: string
+  type: BattleRewardConfigType
+}
+
 // Branch
 
-export type Branch = NarrativeBranch | RewardBranch
+export type Branch = NarrativeBranch | RewardBranch | BattleBranch
 
 export type Branches = {
   [id: string]: Branch

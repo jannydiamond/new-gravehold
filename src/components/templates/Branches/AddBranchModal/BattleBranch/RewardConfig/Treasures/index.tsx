@@ -10,11 +10,11 @@ import FormGroupSelect from 'components/molecules/FormGroupSelect'
 import FormGroupInputText from 'components/molecules/FormGroupInputText'
 
 type Props = {
-  draftBranch: types.RewardBranch
-  updateDraftBranch: (branch: types.Branch) => void
+  config: types.BattleRewardConfig
+  updateDraftRewardConfig: (config: types.BattleRewardConfig) => void
 }
 
-const Treasures = ({ draftBranch, updateDraftBranch }: Props) => {
+const Treasures = ({ config, updateDraftRewardConfig }: Props) => {
   const dataTreasures: aerTypes.Treasure[] = Object.values(
     DATA.normalizedData.ENG.treasures
   )
@@ -31,42 +31,50 @@ const Treasures = ({ draftBranch, updateDraftBranch }: Props) => {
       ? selectOptions.map((option: types.SelectOption) => option.value)
       : []
 
-    updateDraftBranch({
-      ...draftBranch,
-      treasure: {
-        ...draftBranch.treasure,
-        ids: [...selectedTreasureIds],
-      },
+    updateDraftRewardConfig({
+      ...config,
+      ...Object.assign({
+        treasure: {
+          ...config.treasure,
+          ids: [...selectedTreasureIds],
+        },
+      }),
     })
   }
 
   const handleTreasureAmountTier1Change = (event: React.ChangeEvent) => {
-    updateDraftBranch({
-      ...draftBranch,
-      treasure: {
-        ...draftBranch.treasure,
-        tier1: parseInt((event.target as HTMLInputElement).value),
-      },
+    updateDraftRewardConfig({
+      ...config,
+      ...Object.assign({
+        treasure: {
+          ...config.treasure,
+          tier1: parseInt((event.target as HTMLInputElement).value),
+        },
+      }),
     })
   }
 
   const handleTreasureAmountTier2Change = (event: React.ChangeEvent) => {
-    updateDraftBranch({
-      ...draftBranch,
-      treasure: {
-        ...draftBranch.treasure,
-        tier2: parseInt((event.target as HTMLInputElement).value),
-      },
+    updateDraftRewardConfig({
+      ...config,
+      ...Object.assign({
+        treasure: {
+          ...config.treasure,
+          tier2: parseInt((event.target as HTMLInputElement).value),
+        },
+      }),
     })
   }
 
   const handleTreasureAmountTier3Change = (event: React.ChangeEvent) => {
-    updateDraftBranch({
-      ...draftBranch,
-      treasure: {
-        ...draftBranch.treasure,
-        tier3: parseInt((event.target as HTMLInputElement).value),
-      },
+    updateDraftRewardConfig({
+      ...config,
+      ...Object.assign({
+        treasure: {
+          ...config.treasure,
+          tier3: parseInt((event.target as HTMLInputElement).value),
+        },
+      }),
     })
   }
 
