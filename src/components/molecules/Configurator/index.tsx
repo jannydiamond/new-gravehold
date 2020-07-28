@@ -4,6 +4,7 @@ import BasicInformation from 'components/templates/BasicInformation'
 import Branches from 'components/templates/Branches'
 import ConnectBranches from 'components/templates/ConnectBranches'
 import InitialBarracks from 'components/templates/InitialBarracks'
+import InitialUBNCards from 'components/templates/initialUBNCards'
 import Preview from 'components/molecules/Preview'
 
 import Wrapper from './__styled__/Wrapper'
@@ -17,6 +18,7 @@ const Configurator = () => {
         <Branches />
         <ConnectBranches />
         <InitialBarracks />
+        <InitialUBNCards />
       </Form>
 
       <Preview />
