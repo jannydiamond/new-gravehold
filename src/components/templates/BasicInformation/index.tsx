@@ -10,6 +10,7 @@ import FormGroupCheckbox from 'components/molecules/FormGroupCheckbox'
 
 const mapStateToProps = (state: RootState) => ({
   expeditionName: selectors.DraftExpedition.Name.getExpeditionName(state),
+  seed: selectors.DraftExpedition.SeedConfig.getSeed(state),
   bigPocketVariantConfig: selectors.DraftExpedition.BigPocketVariantConfig.getBigPocketVariantConfig(
     state
   ),
@@ -17,6 +18,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = {
   setExpeditionName: actions.DraftExpedition.Name.setExpeditionName,
+  setSeed: actions.DraftExpedition.SeedConfig.setSeed,
   setBigPocketVariantConfig:
     actions.DraftExpedition.BigPocketVariantConfig.setBigPocketVariantConfig,
 }
@@ -25,17 +27,22 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & {}
 
 const BasicInformation = ({
   expeditionName,
+  seed,
   bigPocketVariantConfig,
   setExpeditionName,
+  setSeed,
   setBigPocketVariantConfig,
 }: Props) => {
-
   const handleNameChange = (event: any) => {
     setExpeditionName(event.target.value)
   }
 
   const handleBigPocketChange = (event: any) => {
     setBigPocketVariantConfig(event.currentTarget.checked)
+  }
+
+  const handleSeedChange = (event: any) => {
+    setSeed(event.target.value)
   }
 
   return (
@@ -52,6 +59,12 @@ const BasicInformation = ({
           label="Big Pocket Mode"
           onChange={handleBigPocketChange}
           defaultChecked={bigPocketVariantConfig}
+        />
+        <FormGroupInputText
+          id="seed"
+          label="Seed"
+          onChange={handleSeedChange}
+          defaultValue={seed}
         />
       </Fieldset>
     </Accordion>

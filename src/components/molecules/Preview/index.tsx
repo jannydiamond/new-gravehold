@@ -13,6 +13,7 @@ import Pre from './__styled__/Pre'
 
 const mapStateToProps = (state: RootState) => ({
   name: selectors.DraftExpedition.Name.getExpeditionName(state),
+  seed: selectors.DraftExpedition.SeedConfig.getSeed(state),
   bigPocketVariantConfig: selectors.DraftExpedition.BigPocketVariantConfig.getBigPocketVariantConfig(
     state
   ),
@@ -31,6 +32,7 @@ type Props = ReturnType<typeof mapStateToProps> & {
 const Preview = ({
   fileName = 'expedition',
   name,
+  seed,
   bigPocketVariantConfig,
   firstBranchId,
   branches,
@@ -469,6 +471,11 @@ const Preview = ({
       branches: dataBranches,
     },
   }
+
+  seed !== '' &&
+    Object.assign(data, {
+      seedConfig: seed,
+    })
 
   firstBranchId &&
     Object.assign(data.sequenceConfig, {
