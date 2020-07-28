@@ -23,6 +23,9 @@ const mapStateToProps = (state: RootState) => ({
   firstBranchId: selectors.DraftExpedition.SequenceConfig.FirstBranchId.getFirstBranchId(
     state
   ),
+  initialBarracks: selectors.DraftExpedition.InitialBarracksConfig.getInitialBarracksConfig(
+    state
+  ),
 })
 
 type Props = ReturnType<typeof mapStateToProps> & {
@@ -36,6 +39,7 @@ const Preview = ({
   bigPocketVariantConfig,
   firstBranchId,
   branches,
+  initialBarracks,
 }: Props) => {
   const dataBranches = branches.reduce((branches, branch: types.Branch) => {
     switch (branch.type) {
@@ -481,6 +485,20 @@ const Preview = ({
     Object.assign(data.sequenceConfig, {
       firstBranchId: firstBranchId,
     })
+
+  if (
+    initialBarracks.mageIds.length ||
+    initialBarracks.supplyIds.length ||
+    initialBarracks.treasureIds.length
+  ) {
+    Object.assign(data, {
+      initialBarracksConfig: {
+        mageIds: initialBarracks.mageIds,
+        supplyIds: initialBarracks.supplyIds,
+        treasureIds: initialBarracks.treasureIds,
+      },
+    })
+  }
 
   const handleCopyToClipboard = () => {
     copyToClipboard(JSON.stringify(data, null, '  '))
