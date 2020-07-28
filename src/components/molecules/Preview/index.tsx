@@ -26,6 +26,9 @@ const mapStateToProps = (state: RootState) => ({
   initialBarracks: selectors.DraftExpedition.InitialBarracksConfig.getInitialBarracksConfig(
     state
   ),
+  initialUBNCards: selectors.DraftExpedition.InitialUBNCardsConfig.getInitialUBNCardsConfig(
+    state
+  ),
 })
 
 type Props = ReturnType<typeof mapStateToProps> & {
@@ -40,6 +43,7 @@ const Preview = ({
   firstBranchId,
   branches,
   initialBarracks,
+  initialUBNCards,
 }: Props) => {
   const dataBranches = branches.reduce((branches, branch: types.Branch) => {
     switch (branch.type) {
@@ -499,6 +503,11 @@ const Preview = ({
       },
     })
   }
+
+  initialUBNCards.length &&
+    Object.assign(data, {
+      initialUBNCardsConfig: initialUBNCards,
+    })
 
   const handleCopyToClipboard = () => {
     copyToClipboard(JSON.stringify(data, null, '  '))
