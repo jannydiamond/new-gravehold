@@ -17,6 +17,7 @@ export const initialState: State = {}
 
 export enum ActionTypes {
   ADD_BRANCH = 'DraftExpedition/SequenceConfig/Branches/ADD_BRANCH',
+  UPDATE_BRANCH = 'DraftExpedition/SequenceConfig/Branches/UPDATE_BRANCH',
 }
 
 export const actions = {
@@ -24,6 +25,9 @@ export const actions = {
   addBranch: (
     branch: types.NarrativeBranch | types.RewardBranch | types.BattleBranch
   ) => createAction(ActionTypes.ADD_BRANCH, branch),
+  updateBranch: (
+    branch: types.NarrativeBranch | types.RewardBranch | types.BattleBranch
+  ) => createAction(ActionTypes.UPDATE_BRANCH, branch),
 }
 
 export type Action = ActionsUnion<typeof actions>
@@ -130,6 +134,15 @@ export const Reducer: LoopReducer<State, Action> = (
             },
           }
         }
+      }
+    }
+
+    case ActionTypes.UPDATE_BRANCH: {
+      const { _id } = action.payload
+
+      return {
+        ...state,
+        [_id]: action.payload,
       }
     }
 
