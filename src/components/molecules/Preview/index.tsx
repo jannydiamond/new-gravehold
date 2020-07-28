@@ -19,6 +19,9 @@ const mapStateToProps = (state: RootState) => ({
   branches: selectors.DraftExpedition.SequenceConfig.Branches.getBranches(
     state
   ),
+  firstBranchId: selectors.DraftExpedition.SequenceConfig.FirstBranchId.getFirstBranchId(
+    state
+  ),
 })
 
 type Props = ReturnType<typeof mapStateToProps> & {
@@ -29,6 +32,7 @@ const Preview = ({
   fileName = 'expedition',
   name,
   bigPocketVariantConfig,
+  firstBranchId,
   branches,
 }: Props) => {
   const dataBranches = branches.reduce((branches, branch: types.Branch) => {
@@ -44,6 +48,12 @@ const Preview = ({
               ? narrativeBranch.decisions.map((decision) => decision.text)
               : false,
           },
+        }
+
+        if (narrativeBranch.nextBranchId) {
+          Object.assign(newBranch.config, {
+            nextBranchId: narrativeBranch.nextBranchId,
+          })
         }
 
         return {
@@ -139,6 +149,12 @@ const Preview = ({
               ids: [...rewardBranch.supply.ids, ...blueprints],
               bigPocket: rewardBranch.supply.bigPocket,
             },
+          })
+        }
+
+        if (rewardBranch.nextBranchId) {
+          Object.assign(newBranch.config, {
+            nextBranchId: rewardBranch.nextBranchId,
           })
         }
 
@@ -422,6 +438,12 @@ const Preview = ({
                 : undefined,
           })
 
+        if (battleBranch.nextBranchId) {
+          Object.assign(newBranch.config, {
+            nextBranchId: battleBranch.nextBranchId,
+          })
+        }
+
         return {
           ...branches,
           [branch.id]: newBranch,
@@ -443,9 +465,15 @@ const Preview = ({
     name: name,
     bigPocketVariantConfig: bigPocketVariantConfig,
     sequenceConfig: {
+      firstBranchId: firstBranchId ? firstBranchId : '',
       branches: dataBranches,
     },
   }
+
+  firstBranchId &&
+    Object.assign(data.sequenceConfig, {
+      firstBranchId: firstBranchId,
+    })
 
   const handleCopyToClipboard = () => {
     copyToClipboard(JSON.stringify(data, null, '  '))

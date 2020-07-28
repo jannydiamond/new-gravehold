@@ -24,6 +24,7 @@ export type BranchBase = {
 export type Decision = {
   _id: string
   text: string
+  nextBranchId?: string
 }
 
 export type NarrativeBranch = BranchBase & {
@@ -125,6 +126,7 @@ export type BattleBranch = BranchBase & {
   onLoss?: 'skip' | boolean
   lossRewards?: RewardConfig[]
   winRewards?: RewardConfig
+  nextBranchId?: string
 }
 
 export type BattleRewardConfigType = 'win' | 'loss'
