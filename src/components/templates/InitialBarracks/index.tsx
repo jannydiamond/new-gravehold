@@ -122,7 +122,7 @@ const InitialBarracks = ({
       />
       <FormGroupSelect
         options={supplyOptions}
-        id="selectBarrackSupply"
+        id="selectBarrackSupplyCards"
         label="Select supply cards"
         onChange={handleSupplyChange}
         defaultValue={supplyCardsDefaultValue}

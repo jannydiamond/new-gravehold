@@ -144,6 +144,23 @@ export type Branches = {
   [id: string]: Branch
 }
 
+// Supply Setup
+
+export type Tiles = {
+  [id: string]: aerTypes.MarketTile
+}
+
+export type SupplySetupType = 'official' | 'custom'
+
+export type SupplySetup = {
+  id: string
+  name: string
+  type: SupplySetupType
+  active: boolean
+  default?: boolean
+  tiles: Tiles
+}
+
 // Select options
 
 export type BranchTypeOption = {
