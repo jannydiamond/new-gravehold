@@ -141,7 +141,6 @@ const BattleBranch = ({
     updateDraftBranch({
       ...draftBranch,
       newUBNCards: {
-        ...draftBranch.newUBNCards,
         type: (event.target as HTMLInputElement)
           .value as types.NewUBNCardsTypes,
       },
@@ -153,10 +152,7 @@ const BattleBranch = ({
       ...draftBranch,
       newUBNCards: {
         ...draftBranch.newUBNCards,
-        addRandom:
-          draftBranch.newUBNCards.type === 'custom'
-            ? null
-            : (event.currentTarget as HTMLInputElement).checked,
+        addRandom: (event.currentTarget as HTMLInputElement).checked,
       } as types.NewUBNCardsRegularTyp,
     })
   }
@@ -170,10 +166,7 @@ const BattleBranch = ({
       ...draftBranch,
       newUBNCards: {
         ...draftBranch.newUBNCards,
-        ids:
-          draftBranch.newUBNCards.type === 'regular'
-            ? null
-            : [...selectedUBNCardIds],
+        ids: [...selectedUBNCardIds],
       } as types.NewUBNCardsCustomTyp,
     })
   }
@@ -333,7 +326,7 @@ const BattleBranch = ({
           id="addRandom"
           label="Add random"
           onChange={handleAddRandomChange}
-          defaultChecked={draftBranch?.newUBNCards?.addRandom ?? true}
+          defaultChecked={draftBranch.newUBNCards?.addRandom ?? true}
         />
       )}
       <h2>Treasure</h2>

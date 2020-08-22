@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import * as aerTypes from 'aer-types'
 import * as types from 'types'
 
 import { RootState, selectors } from 'Redux/Store'
@@ -29,6 +30,9 @@ const mapStateToProps = (state: RootState) => ({
   initialUBNCards: selectors.DraftExpedition.InitialUBNCardsConfig.getInitialUBNCardsConfig(
     state
   ),
+  settingsSnapshot: selectors.DraftExpedition.SettingsSnapshotConfig.getSettingsSnapshotConfig(
+    state
+  ),
 })
 
 type Props = ReturnType<typeof mapStateToProps> & {
@@ -44,6 +48,7 @@ const Preview = ({
   branches,
   initialBarracks,
   initialUBNCards,
+  settingsSnapshot,
 }: Props) => {
   const dataBranches = branches.reduce((branches, branch: types.Branch) => {
     switch (branch.type) {
@@ -61,7 +66,7 @@ const Preview = ({
         }
 
         if (narrativeBranch.nextBranchId) {
-          Object.assign(newBranch.config, {
+          Object.assign(newBranch, {
             nextBranchId: narrativeBranch.nextBranchId,
           })
         }
@@ -163,7 +168,7 @@ const Preview = ({
         }
 
         if (rewardBranch.nextBranchId) {
-          Object.assign(newBranch.config, {
+          Object.assign(newBranch, {
             nextBranchId: rewardBranch.nextBranchId,
           })
         }
@@ -188,6 +193,11 @@ const Preview = ({
             },
           },
         }
+
+        battleBranch.newUBNCards.type === 'regular' &&
+          Object.assign(newBranch.config.newUBNCards, {
+            addRandom: battleBranch.newUBNCards?.addRandom ?? true,
+          })
 
         battleBranch.nemesisId &&
           Object.assign(newBranch.config, {
@@ -449,7 +459,7 @@ const Preview = ({
           })
 
         if (battleBranch.nextBranchId) {
-          Object.assign(newBranch.config, {
+          Object.assign(newBranch, {
             nextBranchId: battleBranch.nextBranchId,
           })
         }
@@ -471,12 +481,40 @@ const Preview = ({
     }
   }, {})
 
+  const dataSupplyTiles = Object.values(settingsSnapshot.supplySetup.tiles).map(
+    (tile: aerTypes.MarketTile) => {
+      const newTile = {
+        type: tile.type,
+        operation: tile.operation,
+      }
+
+      tile.threshold &&
+        Object.assign(newTile, {
+          threshold: tile.threshold,
+        })
+
+      tile.values &&
+        Object.assign(newTile, {
+          values: tile.values,
+        })
+
+      return newTile
+    }
+  )
+
   const data = {
     name: name,
     bigPocketVariantConfig: bigPocketVariantConfig,
     sequenceConfig: {
       firstBranchId: firstBranchId ? firstBranchId : '',
       branches: dataBranches,
+    },
+    settingsSnapshotConfig: {
+      ...settingsSnapshot,
+      supplySetup: {
+        ...settingsSnapshot.supplySetup,
+        tiles: dataSupplyTiles,
+      },
     },
   }
 
@@ -519,6 +557,13 @@ const Preview = ({
 
   return (
     <Wrapper>
+      <Button type="button" onClick={handleCopyToClipboard}>
+        Copy to clipboard
+      </Button>
+      <Button type="button" onClick={handleSave}>
+        Save to file
+      </Button>
+
       <Pre>{JSON.stringify(data, null, '  ')}</Pre>
 
       <Button type="button" onClick={handleCopyToClipboard}>

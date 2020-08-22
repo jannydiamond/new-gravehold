@@ -5,6 +5,7 @@ import * as SeedConfig from './SeedConfig'
 import * as BigPocketVariantConfig from './BigPocketVariantConfig'
 import * as InitialBarracksConfig from './InitialBarracksConfig'
 import * as InitialUBNCardsConfig from './InitialUBNCardsConfig'
+import * as SettingsSnapshotConfig from './SettingsSnapshotConfig'
 import * as SequenceConfig from './SequenceConfig'
 
 ///////////
@@ -17,6 +18,7 @@ export type State = {
   BigPocketVariantConfig: BigPocketVariantConfig.State
   InitialBarracksConfig: InitialBarracksConfig.State
   InitialUBNCardsConfig: InitialUBNCardsConfig.State
+  SettingsSnapshotConfig: SettingsSnapshotConfig.State
   SequenceConfig: SequenceConfig.State
 }
 
@@ -26,6 +28,7 @@ export const initialState = {
   BigPocketVariantConfig: BigPocketVariantConfig.initialState,
   InitialBarracksConfig: InitialBarracksConfig.initialState,
   InitialUBNCardsConfig: InitialUBNCardsConfig.initialState,
+  SettingsSnapshotConfig: SettingsSnapshotConfig.initialState,
   SequenceConfig: SequenceConfig.initialState,
 }
 
@@ -39,6 +42,7 @@ export const actions = {
   BigPocketVariantConfig: BigPocketVariantConfig.actions,
   InitialBarracksConfig: InitialBarracksConfig.actions,
   InitialUBNCardsConfig: InitialUBNCardsConfig.actions,
+  SettingsSnapshotConfig: SettingsSnapshotConfig.actions,
   SequenceConfig: SequenceConfig.actions,
 }
 
@@ -48,6 +52,7 @@ export type Action =
   | BigPocketVariantConfig.Action
   | InitialBarracksConfig.Action
   | InitialUBNCardsConfig.Action
+  | SettingsSnapshotConfig.Action
   | SequenceConfig.Action
 
 /////////////
@@ -60,6 +65,7 @@ export const Reducer = combineReducers({
   BigPocketVariantConfig: BigPocketVariantConfig.Reducer,
   InitialBarracksConfig: InitialBarracksConfig.Reducer,
   InitialUBNCardsConfig: InitialUBNCardsConfig.Reducer,
+  SettingsSnapshotConfig: SettingsSnapshotConfig.Reducer,
   SequenceConfig: SequenceConfig.Reducer,
 })
 
@@ -73,5 +79,6 @@ export const selectors = {
   BigPocketVariantConfig: BigPocketVariantConfig.selectors,
   InitialBarracksConfig: InitialBarracksConfig.selectors,
   InitialUBNCardsConfig: InitialUBNCardsConfig.selectors,
+  SettingsSnapshotConfig: SettingsSnapshotConfig.selectors,
   SequenceConfig: SequenceConfig.selectors,
 }
