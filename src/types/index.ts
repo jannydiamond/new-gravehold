@@ -74,7 +74,7 @@ export type RewardBranch = BranchBase & {
   }
   supply: {
     ids: (string | Blueprint)[]
-    blueprints: Blueprint[]
+    blueprints: Blueprint[] | []
     bigPocket?: boolean
   }
   nextBranchId?: string
@@ -94,7 +94,7 @@ export type RewardConfig = {
   }
   supply?: {
     ids: (string | Blueprint)[]
-    blueprints: Blueprint[]
+    blueprints: Blueprint[] | []
     bigPocket?: boolean
   }
 }

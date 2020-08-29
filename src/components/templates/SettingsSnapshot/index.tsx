@@ -473,22 +473,22 @@ const SettingsSnapshot = ({
           <input
             type="radio"
             name="supplySetupType"
-            id="official"
+            id="supplySetupTypeOfficial"
             defaultChecked
             value="official"
             onChange={handleSupplySetupTypeChange}
           />
-          <label htmlFor="official">predefined</label>
+          <label htmlFor="supplySetupTypeOfficial">predefined</label>
         </div>
         <div className="radio-wrapper">
           <input
             type="radio"
             name="supplySetupType"
-            id="custom"
+            id="supplySetupTypeCustom"
             value="custom"
             onChange={handleSupplySetupTypeChange}
           />
-          <label htmlFor="custom">custom</label>
+          <label htmlFor="supplySetupTypeCustom">custom</label>
         </div>
       </Fieldset>
       {supplySetupType === 'custom' && supplySetupId !== 'market1Inc' ? (
