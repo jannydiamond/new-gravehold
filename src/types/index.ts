@@ -191,6 +191,13 @@ export type CardCostsOption = {
 
 export type CardCostsOptions = CardCostsOption[]
 
+export type TreasureLevelOption = {
+  value: string
+  label: string
+}
+
+export type TreasureLevelOptions = TreasureLevelOption[]
+
 export type SelectOption = {
   value: string
   label: string
