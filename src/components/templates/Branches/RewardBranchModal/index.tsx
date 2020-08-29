@@ -10,7 +10,6 @@ type Props = {
 }
 
 const initialBranch: types.RewardBranch = {
-  _id: '',
   id: '',
   type: 'reward',
   rewardType: 'regular',

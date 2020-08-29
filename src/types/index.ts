@@ -14,7 +14,6 @@ export const BRANCH_TYPES = ['narrative', 'battle', 'reward'] as const
 export type BranchType = typeof BRANCH_TYPES[number]
 
 export type BranchBase = {
-  _id: string
   id: string
   type: BranchType
 }

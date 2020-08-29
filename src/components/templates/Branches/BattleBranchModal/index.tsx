@@ -10,7 +10,6 @@ type Props = {
 }
 
 const initialBranch: types.BattleBranch = {
-  _id: '',
   id: '',
   type: 'battle',
   tier: 1,
