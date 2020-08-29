@@ -6,10 +6,12 @@ import Accordion from 'components/organisms/Accordion'
 import Button from 'components/atoms/Button'
 import NarrativeBranchModal from './NarrativeBranchModal'
 import RewardBranchModal from './RewardBranchModal'
+import BattleBranchModal from './BattleBranchModal'
 
 const Branches = () => {
   const narrativeBranchModal = useModal()
   const rewardBranchModal = useModal()
+  const battleBranchModal = useModal()
 
   const handleShowNarrativeBranchModal = () => {
     narrativeBranchModal.show()
@@ -17,6 +19,10 @@ const Branches = () => {
 
   const handleShowRewardBranchModal = () => {
     rewardBranchModal.show()
+  }
+
+  const handleShowBattleBranchModal = () => {
+    battleBranchModal.show()
   }
 
   return (
@@ -35,9 +41,17 @@ const Branches = () => {
       >
         Add reward branch
       </Button>
+      <Button
+        type="button"
+        style={{ display: 'block' }}
+        onClick={handleShowBattleBranchModal}
+      >
+        Add battle branch
+      </Button>
 
       <NarrativeBranchModal modal={narrativeBranchModal} />
       <RewardBranchModal modal={rewardBranchModal} />
+      <BattleBranchModal modal={battleBranchModal} />
     </Accordion>
   )
 }
