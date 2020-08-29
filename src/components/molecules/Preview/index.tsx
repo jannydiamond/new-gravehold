@@ -146,25 +146,30 @@ const Preview = ({
 
         if (
           rewardBranch.supply.ids.length > 0 ||
-          rewardBranch.supply.blueprints.length > 0
+          rewardBranch.supply.blueprints
         ) {
-          const blueprints = rewardBranch.supply.blueprints.map(
-            (blueprint: types.Blueprint) => {
-              return {
-                type: blueprint.type,
-                operation: blueprint.operation,
-                threshold: blueprint.threshold,
-                values: blueprint.values,
-              }
-            }
-          )
+          const blueprints =
+            (rewardBranch.supply.blueprints &&
+              (rewardBranch.supply.blueprints as types.Blueprint[]).map(
+                (blueprint: types.Blueprint) => {
+                  return {
+                    type: blueprint.type,
+                    operation: blueprint.operation,
+                    threshold: blueprint.threshold,
+                    values: blueprint.values,
+                  }
+                }
+              )) ??
+            []
 
-          Object.assign(newBranch.config, {
-            supply: {
-              ids: [...rewardBranch.supply.ids, ...blueprints],
-              bigPocket: rewardBranch.supply.bigPocket,
-            },
-          })
+          if (rewardBranch.supply.ids.length > 0 || blueprints.length > 0) {
+            Object.assign(newBranch.config, {
+              supply: {
+                ids: [...rewardBranch.supply.ids, ...blueprints],
+                bigPocket: rewardBranch.supply.bigPocket,
+              },
+            })
+          }
         }
 
         if (rewardBranch.nextBranchId) {

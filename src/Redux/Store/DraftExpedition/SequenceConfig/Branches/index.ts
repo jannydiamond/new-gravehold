@@ -33,7 +33,7 @@ export const actions = {
     createAction(ActionTypes.ADD_NARRATIVE_BRANCH, branch),
   addBattleBranch: (branch: types.BattleBranch) =>
     createAction(ActionTypes.ADD_BATTLE_BRANCH, branch),
-  addNRewardBranch: (branch: types.RewardBranch) =>
+  addRewardBranch: (branch: types.RewardBranch) =>
     createAction(ActionTypes.ADD_REWARD_BRANCH, branch),
   updateBranch: (
     branch: types.NarrativeBranch | types.RewardBranch | types.BattleBranch
