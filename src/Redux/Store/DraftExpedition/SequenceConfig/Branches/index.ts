@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { LoopReducer } from 'redux-loop'
 import { createAction, ActionsUnion } from '@martin_hotell/rex-tils'
+import shortid from 'shortid'
 
 import * as types from 'types'
 
@@ -17,6 +18,9 @@ export const initialState: State = {}
 
 export enum ActionTypes {
   ADD_BRANCH = 'DraftExpedition/SequenceConfig/Branches/ADD_BRANCH',
+  ADD_NARRATIVE_BRANCH = 'DraftExpedition/SequenceConfig/Branches/ADD_NARRATIVE_BRANCH',
+  ADD_BATTLE_BRANCH = 'DraftExpedition/SequenceConfig/Branches/ADD_BATTLE_BRANCH',
+  ADD_REWARD_BRANCH = 'DraftExpedition/SequenceConfig/Branches/ADD_REWARD_BRANCH',
   UPDATE_BRANCH = 'DraftExpedition/SequenceConfig/Branches/UPDATE_BRANCH',
 }
 
@@ -25,6 +29,12 @@ export const actions = {
   addBranch: (
     branch: types.NarrativeBranch | types.RewardBranch | types.BattleBranch
   ) => createAction(ActionTypes.ADD_BRANCH, branch),
+  addNarrativeBranch: (branch: types.NarrativeBranch) =>
+    createAction(ActionTypes.ADD_NARRATIVE_BRANCH, branch),
+  addBattleBranch: (branch: types.BattleBranch) =>
+    createAction(ActionTypes.ADD_BATTLE_BRANCH, branch),
+  addNRewardBranch: (branch: types.RewardBranch) =>
+    createAction(ActionTypes.ADD_REWARD_BRANCH, branch),
   updateBranch: (
     branch: types.NarrativeBranch | types.RewardBranch | types.BattleBranch
   ) => createAction(ActionTypes.UPDATE_BRANCH, branch),
@@ -134,6 +144,45 @@ export const Reducer: LoopReducer<State, Action> = (
             },
           }
         }
+      }
+    }
+
+    case ActionTypes.ADD_NARRATIVE_BRANCH: {
+      const { id } = action.payload
+      const branchId = id !== '' ? id : shortid.generate()
+
+      return {
+        ...state,
+        [branchId]: {
+          ...action.payload,
+          id: branchId,
+        },
+      }
+    }
+
+    case ActionTypes.ADD_BATTLE_BRANCH: {
+      const { id } = action.payload
+      const branchId = id !== '' ? id : shortid.generate()
+
+      return {
+        ...state,
+        [branchId]: {
+          ...action.payload,
+          id: branchId,
+        },
+      }
+    }
+
+    case ActionTypes.ADD_REWARD_BRANCH: {
+      const { id } = action.payload
+      const branchId = id !== '' ? id : shortid.generate()
+
+      return {
+        ...state,
+        [branchId]: {
+          ...action.payload,
+          id: branchId,
+        },
       }
     }
 
