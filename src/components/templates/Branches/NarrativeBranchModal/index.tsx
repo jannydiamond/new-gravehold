@@ -10,7 +10,6 @@ type Props = {
 }
 
 const initialBranch: types.NarrativeBranch = {
-  _id: '',
   id: '',
   type: 'narrative',
   text: '',

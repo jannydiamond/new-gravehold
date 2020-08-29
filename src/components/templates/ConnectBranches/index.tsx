@@ -144,7 +144,7 @@ const ConnectBranches = ({
                                     {decision.text}
                                     <FormGroupSelect
                                       options={decisionOptions}
-                                      id={`nextBranchId-${branch._id}-${decision._id}`}
+                                      id={`nextBranchId-${branch.id}-${decision._id}`}
                                       label="Next branch id"
                                       onChange={
                                         handleNarrativNextBranchIdChange
@@ -170,7 +170,7 @@ const ConnectBranches = ({
                       <p>Type: {branch.type}</p>
                       <FormGroupSelect
                         options={availableOptions}
-                        id={`nextBranchId-${branch._id}`}
+                        id={`nextBranchId-${branch.id}`}
                         label="Next branch id"
                         onChange={handleNextBranchIdChange}
                       />
