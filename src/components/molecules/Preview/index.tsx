@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Highlight, { defaultProps } from 'prism-react-renderer'
+import theme from './aer-theme'
 
 import * as aerTypes from 'aer-types'
 import * as types from 'types'
@@ -569,7 +571,24 @@ const Preview = ({
         Save to file
       </Button>
 
-      <Pre>{JSON.stringify(data, null, '  ')}</Pre>
+      <Highlight
+        {...defaultProps}
+        code={JSON.stringify(data, null, '  ')}
+        language="json"
+        theme={theme}
+      >
+        {({ tokens, getLineProps, getTokenProps }) => (
+          <Pre>
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </Pre>
+        )}
+      </Highlight>
 
       <Button type="button" onClick={handleCopyToClipboard}>
         Copy to clipboard
