@@ -1,6 +1,6 @@
 {
   "name": "new-gravehold",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha",
   "private": true,
   "babelMacros": {
     "styledComponents": {
