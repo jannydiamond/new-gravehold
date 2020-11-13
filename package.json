@@ -42,7 +42,8 @@
   "homepage": "https://jannydiamond.github.io/new-gravehold/",
   "scripts": {
     "start": "cross-env BROWSER=none react-scripts start",
-    "build": "react-scripts build",
+    "build:base": "cross-env react-scripts build",
+    "build": "PUBLIC_URL=/ yarn run build:base && cp _redirects ./build/_redirects",
     "deploy:ghpages": "react-scripts build && gh-pages -d build",
     "test:jest": "react-scripts test",
     "test:jest:coverage": "react-scripts test --coverage",
