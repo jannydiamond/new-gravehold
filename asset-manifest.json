@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/aer-custom-expedition-editor/static/js/main.de9b93f6.chunk.js",
-    "main.js.map": "/aer-custom-expedition-editor/static/js/main.de9b93f6.chunk.js.map",
-    "runtime-main.js": "/aer-custom-expedition-editor/static/js/runtime-main.6adf0def.js",
-    "runtime-main.js.map": "/aer-custom-expedition-editor/static/js/runtime-main.6adf0def.js.map",
-    "static/js/2.09443bfa.chunk.js": "/aer-custom-expedition-editor/static/js/2.09443bfa.chunk.js",
-    "static/js/2.09443bfa.chunk.js.map": "/aer-custom-expedition-editor/static/js/2.09443bfa.chunk.js.map",
-    "index.html": "/aer-custom-expedition-editor/index.html",
-    "precache-manifest.de165257fa642de47cfe66aa19c7674f.js": "/aer-custom-expedition-editor/precache-manifest.de165257fa642de47cfe66aa19c7674f.js",
-    "service-worker.js": "/aer-custom-expedition-editor/service-worker.js",
-    "static/js/2.09443bfa.chunk.js.LICENSE.txt": "/aer-custom-expedition-editor/static/js/2.09443bfa.chunk.js.LICENSE.txt"
+    "main.js": "/new-gravehold/static/js/main.94de0f5d.chunk.js",
+    "main.js.map": "/new-gravehold/static/js/main.94de0f5d.chunk.js.map",
+    "runtime-main.js": "/new-gravehold/static/js/runtime-main.c4cb604a.js",
+    "runtime-main.js.map": "/new-gravehold/static/js/runtime-main.c4cb604a.js.map",
+    "static/js/2.fbaafa3a.chunk.js": "/new-gravehold/static/js/2.fbaafa3a.chunk.js",
+    "static/js/2.fbaafa3a.chunk.js.map": "/new-gravehold/static/js/2.fbaafa3a.chunk.js.map",
+    "index.html": "/new-gravehold/index.html",
+    "precache-manifest.72e0c3ff6883d35ba765b8e74622df0b.js": "/new-gravehold/precache-manifest.72e0c3ff6883d35ba765b8e74622df0b.js",
+    "service-worker.js": "/new-gravehold/service-worker.js",
+    "static/js/2.fbaafa3a.chunk.js.LICENSE.txt": "/new-gravehold/static/js/2.fbaafa3a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.6adf0def.js",
-    "static/js/2.09443bfa.chunk.js",
-    "static/js/main.de9b93f6.chunk.js"
+    "static/js/runtime-main.c4cb604a.js",
+    "static/js/2.fbaafa3a.chunk.js",
+    "static/js/main.94de0f5d.chunk.js"
   ]
 }
