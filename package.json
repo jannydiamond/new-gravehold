@@ -1,5 +1,5 @@
 {
-  "name": "aer-custom-expedition-editor",
+  "name": "new-gravehold",
   "version": "0.1.0",
   "private": true,
   "babelMacros": {
@@ -39,7 +39,7 @@
     "styled-components": "^5.1.0",
     "typescript": "^3.8.3"
   },
-  "homepage": "https://jannydiamond.github.io/aer-custom-expedition-editor/",
+  "homepage": "https://jannydiamond.github.io/new-gravehold/",
   "scripts": {
     "start": "cross-env BROWSER=none react-scripts start",
     "build": "react-scripts build",
