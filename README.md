@@ -1,3 +1,7 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a3265cb7-7c84-4f03-9f56-e45a5e1b28e0/deploy-status)](https://app.netlify.com/sites/elated-montalcini-d061fa/deploys)
+[![App](https://img.shields.io/badge/App-new--gravehold.de-%232196f3)](https://new-graveholde.de)
+[![Official Aeons End Discord](https://img.shields.io/badge/AE%20Discord-https%3A%2F%2Fdiscord.gg%2FPvjcfPt-%237289DA.svg?style=flat-squar)](https://discord.gg/PvjcfPt)
+
 ## ToC
 
 - [About](#about)
